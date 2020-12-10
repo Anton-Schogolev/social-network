@@ -1,0 +1,23 @@
+.container{
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    margin: 1em;
+    padding: 1em;
+    grid-column-gap: 1em;
+    /*border: grey solid 1px;*/
+}
+.ava{
+    border-radius: 100%;
+}
+.likes{
+    margin: 0;
+    padding: 0;
+}
+.postText{
+    background: lightgrey;
+}
+.preText{
+    padding: 10px;
+    font-size: 16px;
+    font-family: Lucida Sans, serif;
+}

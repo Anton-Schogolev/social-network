@@ -1,0 +1,45 @@
+.messLeft {
+    display: grid;
+    grid-template-columns:50px 1fr;
+    grid-template-areas: "ava mess";
+    padding: 10px;
+}
+
+.messRight{
+    display: grid;
+    grid-template-columns:1fr 50px;
+    grid-template-areas: "mess ava";
+    padding: 10px;
+}
+
+.message {
+    grid-area: mess;
+    border-radius: 10px;
+    max-width: 70%;
+    padding: 10px;
+    word-wrap: break-word;
+}
+
+.messageR {
+    background: #4cccde;
+    justify-self: right;
+}
+
+.messageL {
+    background: lightblue;
+    justify-self: left;
+}
+
+.ava {
+    grid-area: ava;
+    border: none;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    background: grey;
+    margin: 0 auto;
+}
+
+.name{
+    text-align: center;
+}

@@ -1,0 +1,25 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    background: white;
+}
+.dialogsItems{
+    padding: 10px;
+    border-right: lightgrey solid 1px;
+}
+.messages{
+    padding: 10px;
+}
+
+.allMassages{
+    min-height: calc(100vh - 160px);
+}
+
+.ava{
+    border: none;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    background: grey;
+    margin: 0 auto;
+}

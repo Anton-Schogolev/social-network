@@ -1,0 +1,8 @@
+
+.dialog a.active{
+    color: black;
+}
+.dialog a{
+    color: gray;
+    text-decoration: none;
+}

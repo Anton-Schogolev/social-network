@@ -1,0 +1,37 @@
+.nav{
+    grid-area: n;
+    background: aqua;
+    padding: 10px;
+}
+.nav>.item{
+    font-size: 30px;
+    font-family: sans-serif;
+}
+.item a{
+    color: maroon;
+    text-decoration: none;
+}
+.item{
+    color: maroon;
+    text-decoration: none;
+}
+a.active{
+    color: white;
+}
+.ava{
+    border: none;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    background: grey;
+    margin: 0 auto;
+}
+.cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.friend{
+}
