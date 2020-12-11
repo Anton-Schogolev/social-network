@@ -6,16 +6,17 @@ import {PostsPropsType} from "../../redux/State";
 
 type PropsType={
     state: PostsPropsType
+    addPost: (text:string) => void
 }
 
-export function Profile(props: PropsType) {
+export function Profile({state,addPost}: PropsType) {
     return (
         <>
             <div>
                 <img width={"100%"} src={"http://www.cashadvance6online.com/data/archive/img/751556980.png"} alt={""}/>
             </div>
             <User/>
-            <MyPosts state={props.state}/>
+            <MyPosts state={state} addPost={addPost}/>
         </>
     )
 }

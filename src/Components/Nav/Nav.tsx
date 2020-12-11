@@ -7,8 +7,8 @@ type PropsType = {
     friends: Array<DialogsDataType>
 }
 
-export function Nav(props: PropsType) {
-    const friendsRender = props.friends.map(fr => {
+export function Nav({friends}: PropsType) {
+    const friendsRender = friends.map(fr => {
         return (
                 <div key={fr.id} className={s.friend}>
 

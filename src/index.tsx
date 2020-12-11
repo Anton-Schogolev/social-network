@@ -4,18 +4,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import state, {AppPropsType, subscribe} from "./redux/State";
+import {store} from "./redux/State";
 
-const rerenderFullTree=(state:AppPropsType)=> {
+const rerenderFullTree=()=> {
     ReactDOM.render(
         <React.StrictMode>
-            <App state={state}/>
+            <App store={store}/>
         </React.StrictMode>,
         document.getElementById('root')
     );
 }
-rerenderFullTree(state)
-subscribe(rerenderFullTree)
+rerenderFullTree()
+store.subscribe(rerenderFullTree)
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

@@ -1,6 +1,6 @@
-let rerenderFullTree = (state: AppPropsType) => {
+/*let rerenderFullTree = (state: AppPropsType) => {
     console.log("rerender error")
-}
+}*/
 
 export type PostType = {
     id: number
@@ -34,20 +34,22 @@ export type NavType = {
 }
 
 
-export type AppPropsType = {
+export type StateType = {
     dialogs: DialogsPropsType
     posts: PostsPropsType
     nav: NavType
 }
 export type StoreType = {
-    _state: AppPropsType
+    _state: StateType
     _callSubscriber: () => void
     addMessage: (text: string) => void
     addPost: (text: string) => void
     subscribe: (observer: () => void) => void
+    getState: () => StateType
 }
 
 
+/*
 const addPost = (text: string) => {
     state.posts.postsArray.unshift({
         id: state.posts.postsArray.length,
@@ -65,6 +67,7 @@ const addMessage = (text: string) => {
     })
     rerenderFullTree(state)
 }
+*/
 
 
 /*const dialogsData: Array<DialogsDataType> = [
@@ -170,7 +173,7 @@ export const store: StoreType = {
     _callSubscriber: () => {
         console.log("subscriber called")
     },
-    addMessage: (text) => {
+    addMessage (text)  {
         this._state.dialogs.messageProps.push({
             id: this._state.dialogs.messageProps.length,
             message: text,
@@ -178,7 +181,8 @@ export const store: StoreType = {
         })
         this._callSubscriber()
     },
-    addPost: (text) => {
+    addPost (text)  {
+        debugger
         this._state.posts.postsArray.unshift({
             id: this._state.posts.postsArray.length,
             text: text,
@@ -187,10 +191,8 @@ export const store: StoreType = {
         })
         this._callSubscriber()
     },
-    subscribe: (observer) => {
+    subscribe (observer)  {
         this._callSubscriber=observer
-    }
-}
-export const subscribe = (observer: (state: AppPropsType) => void) => {
-    rerenderFullTree = observer
+    },
+    getState(){ return this._state}
 }

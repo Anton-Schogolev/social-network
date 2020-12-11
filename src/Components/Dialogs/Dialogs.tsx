@@ -7,9 +7,10 @@ import {NewMessage} from "./NewMessage/NewMessage";
 
 type PropsType={
     state:DialogsPropsType
+    addMessage: (text: string) => void
 }
 
-export const Dialogs:React.FC<PropsType>=({state})=> {
+export const Dialogs:React.FC<PropsType>=({state, addMessage})=> {
 
     const dialogMap = state.dialogsProps.map(x => {
         return <Dialog key={x.id} id={x.id} name={x.name}/>
@@ -28,7 +29,7 @@ export const Dialogs:React.FC<PropsType>=({state})=> {
             </div>
             <div className={s.messages}>
                 <div className={s.allMassages}>{messageMap}</div>
-                <NewMessage addMess={state.addMessage}/>
+                <NewMessage addMess={addMessage}/>
 
             </div>
         </div>
