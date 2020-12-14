@@ -1,8 +1,8 @@
-.text{
+.text {
     width: 100%;
-    -webkit-box-shadow: inset 8px 8px 8px 0px #dddddd;
-    -moz-box-shadow: inset 8px 8px 8px 0px #dddddd;
-    box-shadow: inset 8px 8px 8px 0px #dddddd;
+    -webkit-box-shadow: inset 8px 8px 8px 0 #dddddd;
+    -moz-box-shadow: inset 8px 8px 8px 0 #dddddd;
+    box-shadow: inset 8px 8px 8px 0 #dddddd;
     outline: none;
     border-radius: 6px;
 }

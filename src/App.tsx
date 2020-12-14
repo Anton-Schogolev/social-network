@@ -10,34 +10,35 @@ import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
 import {StoreType} from "./redux/State";
 
-type PropsType={
-    store:StoreType
+type PropsType = {
+    store: StoreType
 }
 
-function App({store}:PropsType) {
-  return (
-      <BrowserRouter>
-          <div className="App">
-              <Header/>
-              <Nav friends={store.getState().nav.friends}/>
-              <div className={"container"}>
+function App({store}: PropsType) {
+    return (
+        <BrowserRouter>
+            <div className="App">
+                <Header/>
+                <Nav friends={store.getState().nav.friends}/>
+                <div className={"container"}>
 
-                  <Route exact path={"/"} render={
-                      ()=><Profile
-                          state={store.getState().posts}
-                          addPost={store.addPost.bind(store)}
-                      />}/>
-                  <Route path={"/Dialogs"} render={
-                      ()=><Dialogs
-                          state={store.getState().dialogs}
-                          addMessage={store.addMessage.bind(store)}
-                      />}/>
-                  <Route path={"/news"} render={()=><News/>}/>
-                  <Route path={"/music"} render={()=><Music/>}/>
-                  <Route path={"/settings"} render={()=><Settings/>}/>
-              </div>
-          </div>
-      </BrowserRouter>
-  );
+                    <Route exact path={"/"} render={
+                        () => <Profile
+                            state={store.getState().posts}
+                            dispatch={store.dispatch.bind(store)}
+                        />}/>
+                    <Route path={"/Dialogs"} render={
+                        () => <Dialogs
+                            state={store.getState().dialogs}
+                            dispatch={store.dispatch.bind(store)}
+                        />}/>
+                    <Route path={"/news"} render={() => <News/>}/>
+                    <Route path={"/music"} render={() => <Music/>}/>
+                    <Route path={"/settings"} render={() => <Settings/>}/>
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
+
 export default App;

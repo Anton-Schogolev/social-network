@@ -1,8 +1,9 @@
 import React, {KeyboardEvent, ChangeEvent, useState} from "react";
 import s from "./NewMessage.module.css";
+import {ActionsTypes, addMessageAC} from "../../../redux/State";
 
 type PropsType = {
-    addMess: (text: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 export function NewMessage(props: PropsType) {
@@ -10,11 +11,10 @@ export function NewMessage(props: PropsType) {
     const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => setText(e.currentTarget.value)
     const onEnterText = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && !e.shiftKey && text.trim() !== "") {
-            props.addMess(text)
+            props.dispatch(addMessageAC(text))
             setText('')
             e.preventDefault()
-        }
-        else if (e.key === "Enter" && !e.shiftKey) {
+        } else if (e.key === "Enter" && !e.shiftKey) {
             setText('')
             e.preventDefault()
         }

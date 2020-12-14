@@ -1,22 +1,24 @@
 import React from "react";
 import {Post} from "./Post/Post";
 import {NewPost} from "./NewPost/NewPost";
-import {PostsPropsType} from "../../../redux/State";
+import {ActionsTypes, PostsPropsType} from "../../../redux/State";
 
-type PropsType={
+type PropsType = {
     state: PostsPropsType
-    addPost: (text:string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-export const MyPosts:React.FC<PropsType>=({state, addPost})=> {
+export const MyPosts: React.FC<PropsType> = ({state, dispatch}) => {
 
-    const postDataMap=state.postsArray.map(x=>{return(
-        <Post key={x.id} text={x.text} ava={x.ava} amountOfLikes={x.amountOfLikes} id={x.id}/>
-    )})
+    const postDataMap = state.postsArray.map(x => {
+        return (
+            <Post key={x.id} text={x.text} ava={x.ava} amountOfLikes={x.amountOfLikes} id={x.id}/>
+        )
+    })
     return (
         <div>
             <h4>My posts</h4>
-            <NewPost addNewPost={addPost}/>
+            <NewPost dispatch={dispatch}/>
             {postDataMap}
         </div>
     )

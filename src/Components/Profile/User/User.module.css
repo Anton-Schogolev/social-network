@@ -1,37 +1,44 @@
-.user{
+.user {
     display: grid;
     grid-template-columns: 100px 1fr;
     grid-gap: 1em;
 }
-.ava{
+
+.ava {
     width: 100px;
     height: 100px;
 }
 
 
-.cont{
+.cont {
     display: grid;
     grid-template-columns: 40px 40px 20px;
     grid-gap: 1em;
 }
-.on{
+
+.on {
     border: black solid 1px;
 }
-.on.active{
+
+.on.active {
     background: #2fee2f;
     border: none;
 }
-.off{
+
+.off {
     border: black solid 1px;
 }
-.off.active{
+
+.off.active {
     border: none;
     background: #dd3333;
 }
-.diode.on{
+
+.diode.on {
     background: #2fee2f;
 }
-.diode{
+
+.diode {
     height: 10px;
     width: 10px;
     align-self: center;

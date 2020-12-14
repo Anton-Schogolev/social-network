@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react";
+import React from "react";
 
 type PropsType = {
     bold: boolean
@@ -10,18 +10,20 @@ export function Star(props: PropsType) {
     const starDraw = () => {
         if (props.bold)
             return <b>
-                <span onClick={() => props.onStarClick(props.id-1)}>
+                <span onClick={() => props.onStarClick(props.id - 1)}>
                     S
                 </span>
                 <span onClick={() => props.onStarClick(props.id)}>
                     tar </span>
             </b>
         else {
-            return <><span onClick={() => props.onStarClick(props.id-1)}>
+            return <><span onClick={() => props.onStarClick(props.id - 1)}>
                     S
                 </span>
-                <span onClick={(e) => {props.onStarClick(props.id)
-                    console.log(e)}}>
+                <span onClick={(e) => {
+                    props.onStarClick(props.id)
+                    console.log(e)
+                }}>
                     tar </span>
             </>
         }
@@ -30,9 +32,9 @@ export function Star(props: PropsType) {
     //     props.onStarClick(e.offsetX<5?props.id-1:props.id)
     // }
     return (
-    //     <span onClick={StarClickZhdun}>
-    //         {props.bold ? <b>Star </b> : "Star "}
-    //     </span>
+        //     <span onClick={StarClickZhdun}>
+        //         {props.bold ? <b>Star </b> : "Star "}
+        //     </span>
         starDraw()
     )
 }

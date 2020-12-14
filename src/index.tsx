@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {store} from "./redux/State";
 
-const rerenderFullTree=()=> {
+const rerenderFullTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <App store={store}/>

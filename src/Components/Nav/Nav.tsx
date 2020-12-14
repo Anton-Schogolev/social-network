@@ -10,12 +10,15 @@ type PropsType = {
 export function Nav({friends}: PropsType) {
     const friendsRender = friends.map(fr => {
         return (
-                <div key={fr.id} className={s.friend}>
+            <div key={fr.id} className={s.friend}>
 
-                    <NavLink to={`/dialogs/${fr.id}`} activeClassName={s.active}><div className={s.ava}/></NavLink>
-                    <div className={s.item}><NavLink to={`/dialogs/${fr.id}`} activeClassName={s.active}>{fr.name}</NavLink></div>
-
+                <NavLink to={`/dialogs/${fr.id}`} activeClassName={s.active}>
+                    <div className={s.ava}/>
+                </NavLink>
+                <div className={s.item}><NavLink to={`/dialogs/${fr.id}`} activeClassName={s.active}>{fr.name}</NavLink>
                 </div>
+
+            </div>
         )
     })
     return (

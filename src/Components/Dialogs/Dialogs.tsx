@@ -1,16 +1,16 @@
 import React from "react";
 import s from "./Dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
-import {DialogsPropsType} from "../../redux/State";
+import {ActionsTypes, DialogsPropsType} from "../../redux/State";
 import {Message} from "./Message/Message";
 import {NewMessage} from "./NewMessage/NewMessage";
 
-type PropsType={
-    state:DialogsPropsType
-    addMessage: (text: string) => void
+type PropsType = {
+    state: DialogsPropsType
+    dispatch: (action: ActionsTypes) => void
 }
 
-export const Dialogs:React.FC<PropsType>=({state, addMessage})=> {
+export const Dialogs: React.FC<PropsType> = ({state, dispatch}) => {
 
     const dialogMap = state.dialogsProps.map(x => {
         return <Dialog key={x.id} id={x.id} name={x.name}/>
@@ -29,7 +29,7 @@ export const Dialogs:React.FC<PropsType>=({state, addMessage})=> {
             </div>
             <div className={s.messages}>
                 <div className={s.allMassages}>{messageMap}</div>
-                <NewMessage addMess={addMessage}/>
+                <NewMessage dispatch={dispatch}/>
 
             </div>
         </div>

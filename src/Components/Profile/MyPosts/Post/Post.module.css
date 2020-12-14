@@ -1,4 +1,4 @@
-.container{
+.container {
     display: grid;
     grid-template-columns: 58px 1fr;
     margin: 1em;
@@ -6,17 +6,21 @@
     grid-column-gap: 1em;
     /*border: grey solid 1px;*/
 }
-.ava{
+
+.ava {
     border-radius: 100%;
 }
-.likes{
+
+.likes {
     margin: 0;
     padding: 0;
 }
-.postText{
+
+.postText {
     background: lightgrey;
 }
-.preText{
+
+.preText {
     padding: 10px;
     font-size: 16px;
     font-family: Lucida Sans, serif;

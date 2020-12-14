@@ -1,24 +1,29 @@
-.nav{
+.nav {
     grid-area: n;
     background: aqua;
     padding: 10px;
 }
-.nav>.item{
+
+.nav > .item {
     font-size: 30px;
     font-family: sans-serif;
 }
-.item a{
+
+.item a {
     color: maroon;
     text-decoration: none;
 }
-.item{
+
+.item {
     color: maroon;
     text-decoration: none;
 }
-a.active{
+
+a.active {
     color: white;
 }
-.ava{
+
+.ava {
     border: none;
     border-radius: 100%;
     width: 30px;
@@ -26,12 +31,14 @@ a.active{
     background: grey;
     margin: 0 auto;
 }
-.cont{
+
+.cont {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     padding-top: 40px;
     padding-bottom: 40px;
 }
-.friend{
+
+.friend {
 }

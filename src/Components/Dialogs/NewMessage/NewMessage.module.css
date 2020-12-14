@@ -1,15 +1,16 @@
-.text{
+.text {
     width: 100%;
-    -webkit-box-shadow: inset 4px 4px 4px 0px #dddddd;
-    -moz-box-shadow: inset 4px 4px 4px 0px #dddddd;
-    box-shadow: inset 4px 4px 4px 0px #dddddd;
+    -webkit-box-shadow: inset 4px 4px 4px 0 #dddddd;
+    -moz-box-shadow: inset 4px 4px 4px 0 #dddddd;
+    box-shadow: inset 4px 4px 4px 0 #dddddd;
     outline: none;
     border-radius: 6px;
     resize: none;
     height: 60px;
     /*display: inline-block;*/
 }
-.ava{
+
+.ava {
     border: none;
     border-radius: 100%;
     width: 30px;
@@ -17,13 +18,14 @@
     background: grey;
     margin: 0 auto;
 }
+
 /*.space{*/
 /*    display: inline-block;*/
 /*    width: 60px;*/
 /*}*/
-.container{
-   /* display: grid;
-    grid-template-columns: 60px 1fr;*/
+.container {
+    /* display: grid;
+     grid-template-columns: 60px 1fr;*/
     height: 60px;
     /*padding: 10px;*/
 }

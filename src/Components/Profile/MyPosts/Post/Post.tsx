@@ -3,8 +3,7 @@ import s from "./Post.module.css"
 import {PostType} from "../../../../redux/State";
 
 
-
-export function Post(props:PostType) {
+export function Post(props: PostType) {
     return (
         <div className={s.container}>
             <img src={props.ava} className={s.ava} alt={""}/>

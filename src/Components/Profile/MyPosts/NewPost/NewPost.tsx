@@ -1,17 +1,18 @@
 import React, {ChangeEvent, useState} from "react";
 import s from "./NewPost.module.css"
+import {ActionsTypes, addPostAC} from "../../../../redux/State";
 
 type NewPostType = {
-    addNewPost: (text:string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
-export function NewPost(props:NewPostType) {
-    const [textarea,setTextarea]=useState<string>("")
-    const onTextareaChange=(e:ChangeEvent<HTMLTextAreaElement>)=>{
+export function NewPost(props: NewPostType) {
+    const [textarea, setTextarea] = useState<string>("")
+    const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setTextarea(e.currentTarget.value)
     }
-    const onAddPostClick = () =>{
-        props.addNewPost(textarea)
+    const onAddPostClick = () => {
+        props.dispatch(addPostAC(textarea))
         setTextarea("")
     }
     return (

@@ -1,5 +1,6 @@
 import s from "./User.module.css";
 import React from "react";
+
 // import {PostType} from "../../../redux/State";
 
 export function User() {
