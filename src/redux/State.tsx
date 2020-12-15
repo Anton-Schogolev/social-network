@@ -2,6 +2,10 @@
     console.log("rerender error")
 }*/
 
+import {postsReducer} from "./postsReducer";
+import {navReducer} from "./navReducer";
+import {dialogsReducer} from "./dialogsReducer";
+
 export type PostType = {
     id: number
     text: string
@@ -51,10 +55,6 @@ export type ActionsTypes =
 export type StoreType = {
     _state: StateType
     _callSubscriber: () => void
-    _addMessage: () => void
-    _changeNewMessage: (text: string) => void
-    _addPost: () => void
-    _changeNewPost: (text: string) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
@@ -106,41 +106,11 @@ export const store: StoreType = {
         return this._state
     },
 
-    _addMessage() {
-        this._state.dialogs.messageProps.push({
-            id: this._state.dialogs.messageProps.length,
-            message: this._state.dialogs.newMessage,
-            userId: 5
-        })
-        this._callSubscriber()
-    },
-    _changeNewMessage(text) {
-        this._state.dialogs.newMessage = text
-        this._callSubscriber()
-    },
-    _addPost() {
-        this._state.posts.postsArray.unshift({
-            id: this._state.posts.postsArray.length,
-            text: this._state.posts.newPost,
-            ava: ava,
-            amountOfLikes: 0
-        })
-        this._callSubscriber()
-    },
-    _changeNewPost(text) {
-        this._state.posts.newPost = text
-        this._callSubscriber()
-    },
     dispatch(action) {
-        if (action.type === "ADD-MESSAGE") {
-            this._addMessage()
-        }else if (action.type === "CHANGE-NEW-MESSAGE") {
-            this._changeNewMessage(action.text)
-        } else if (action.type === "ADD-POST") {
-            this._addPost()
-        } else if (action.type === "CHANGE-NEW-POST") {
-            this._changeNewPost(action.text)
-        }
+        this._state.posts = postsReducer(this._state.posts, action)
+        this._state.dialogs = dialogsReducer(this._state.dialogs, action)
+        this._state.nav = navReducer(this._state.nav, action)
+        this._callSubscriber()
     }
 }
 
