@@ -18,7 +18,7 @@ export const MyPosts: React.FC<PropsType> = ({state, dispatch}) => {
     return (
         <div>
             <h4>My posts</h4>
-            <NewPost dispatch={dispatch}/>
+            <NewPost value={state.newPost} dispatch={dispatch}/>
             {postDataMap}
         </div>
     )

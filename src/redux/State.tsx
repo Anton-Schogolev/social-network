@@ -10,6 +10,7 @@ export type PostType = {
 }
 export type PostsPropsType = {
     postsArray: Array<PostType>
+    newPost: string
 }
 const ava = "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
 
@@ -26,6 +27,7 @@ export type MessageDataType = {
 export type DialogsPropsType = {
     dialogsProps: Array<DialogsDataType>
     messageProps: Array<MessageDataType>
+    newMessage: string
 }
 
 
@@ -40,13 +42,19 @@ export type StateType = {
     nav: NavType
 }
 
-export type ActionsTypes = ReturnType<typeof addMessageAC> | ReturnType<typeof addPostAC>
+export type ActionsTypes =
+    ReturnType<typeof addMessageAC> |
+    ReturnType<typeof changeNewMessageAC> |
+    ReturnType<typeof addPostAC> |
+    ReturnType<typeof changeNewPostAC>
 
 export type StoreType = {
     _state: StateType
     _callSubscriber: () => void
-    _addMessage: (text: string) => void
-    _addPost: (text: string) => void
+    _addMessage: () => void
+    _changeNewMessage: (text: string) => void
+    _addPost: () => void
+    _changeNewPost: (text: string) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
@@ -69,13 +77,15 @@ export const store: StoreType = {
                 {id: 2, message: "How are you?", userId: 5},
                 {id: 3, message: "How is your typeScript?", userId: 5},
                 {id: 3, message: "Hi! It's good", userId: 3}
-            ]
+            ],
+            newMessage: ""
         },
         posts: {
             postsArray: [
                 {id: 0, ava: ava, text: "Hey! How are you?", amountOfLikes: 26},
                 {id: 1, ava: ava, text: "It's my first post.", amountOfLikes: 14}
-            ]
+            ],
+            newPost: ""
         },
         nav: {
             friends: [
@@ -96,41 +106,63 @@ export const store: StoreType = {
         return this._state
     },
 
-    _addMessage(text) {
+    _addMessage() {
         this._state.dialogs.messageProps.push({
             id: this._state.dialogs.messageProps.length,
-            message: text,
+            message: this._state.dialogs.newMessage,
             userId: 5
         })
         this._callSubscriber()
     },
-    _addPost(text) {
+    _changeNewMessage(text) {
+        this._state.dialogs.newMessage = text
+        this._callSubscriber()
+    },
+    _addPost() {
         this._state.posts.postsArray.unshift({
             id: this._state.posts.postsArray.length,
-            text: text,
+            text: this._state.posts.newPost,
             ava: ava,
             amountOfLikes: 0
         })
         this._callSubscriber()
     },
+    _changeNewPost(text) {
+        this._state.posts.newPost = text
+        this._callSubscriber()
+    },
     dispatch(action) {
         if (action.type === "ADD-MESSAGE") {
-            this._addMessage(action.text)
+            this._addMessage()
+        }else if (action.type === "CHANGE-NEW-MESSAGE") {
+            this._changeNewMessage(action.text)
         } else if (action.type === "ADD-POST") {
-            this._addPost(action.text)
+            this._addPost()
+        } else if (action.type === "CHANGE-NEW-POST") {
+            this._changeNewPost(action.text)
         }
     }
 }
 
-export const addPostAC = (text: string) => {
+export const addPostAC = () => {
     return {
         type: "ADD-POST",
+    } as const
+}
+export const changeNewPostAC = (text: string) => {
+    return {
+        type: "CHANGE-NEW-POST",
         text: text
     } as const
 }
-export const addMessageAC = (text: string) => {
+export const addMessageAC = () => {
     return {
-        type: "ADD-MESSAGE",
+        type: "ADD-MESSAGE"
+    } as const
+}
+export const changeNewMessageAC = (text: string) => {
+    return {
+        type: "CHANGE-NEW-MESSAGE",
         text: text
     } as const
 }

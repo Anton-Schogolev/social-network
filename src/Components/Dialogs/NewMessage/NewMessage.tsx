@@ -1,21 +1,23 @@
-import React, {KeyboardEvent, ChangeEvent, useState} from "react";
+import React, {KeyboardEvent, ChangeEvent} from "react";
 import s from "./NewMessage.module.css";
-import {ActionsTypes, addMessageAC} from "../../../redux/State";
+import {ActionsTypes, addMessageAC, changeNewMessageAC} from "../../../redux/State";
 
 type PropsType = {
+    value: string
     dispatch: (action: ActionsTypes) => void
 }
 
-export function NewMessage(props: PropsType) {
-    const [text, setText] = useState<string>("")
-    const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => setText(e.currentTarget.value)
+export function NewMessage({value, dispatch}: PropsType) {
+    const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        dispatch(changeNewMessageAC(e.currentTarget.value))
+    }
     const onEnterText = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter" && !e.shiftKey && text.trim() !== "") {
-            props.dispatch(addMessageAC(text))
-            setText('')
+        if (e.key === "Enter" && !e.shiftKey && value.trim() !== "") {
+            dispatch(addMessageAC())
+            dispatch(changeNewMessageAC(""))
             e.preventDefault()
         } else if (e.key === "Enter" && !e.shiftKey) {
-            setText('')
+            dispatch(changeNewMessageAC(""))
             e.preventDefault()
         }
     }
@@ -28,7 +30,7 @@ export function NewMessage(props: PropsType) {
             <textarea
                 autoFocus
                 className={s.text}
-                value={text}
+                value={value}
                 onChange={onTextareaChange}
                 onKeyPress={onEnterText}
             />

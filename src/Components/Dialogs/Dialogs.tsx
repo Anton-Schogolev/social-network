@@ -29,7 +29,7 @@ export const Dialogs: React.FC<PropsType> = ({state, dispatch}) => {
             </div>
             <div className={s.messages}>
                 <div className={s.allMassages}>{messageMap}</div>
-                <NewMessage dispatch={dispatch}/>
+                <NewMessage value={state.newMessage} dispatch={dispatch}/>
 
             </div>
         </div>
