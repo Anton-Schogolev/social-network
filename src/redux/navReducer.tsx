@@ -1,4 +1,4 @@
-import {ActionsTypes, NavType} from "./State";
+import {ActionsTypes, NavType} from "./Store";
 
 export const navReducer = (state: NavType, action: ActionsTypes) => {
     return state

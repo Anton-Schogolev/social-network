@@ -1,6 +1,7 @@
 import React, {KeyboardEvent, ChangeEvent} from "react";
 import s from "./NewMessage.module.css";
-import {ActionsTypes, addMessageAC, changeNewMessageAC} from "../../../redux/State";
+import {ActionsTypes} from "../../../redux/Store";
+import {addMessageAC, changeNewMessageAC} from "../../../redux/dialogsReducer";
 
 type PropsType = {
     value: string

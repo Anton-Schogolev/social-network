@@ -2,9 +2,9 @@
     console.log("rerender error")
 }*/
 
-import {postsReducer} from "./postsReducer";
+import {addPostAC, changeNewPostAC, postsReducer} from "./postsReducer";
 import {navReducer} from "./navReducer";
-import {dialogsReducer} from "./dialogsReducer";
+import {addMessageAC, changeNewMessageAC, dialogsReducer} from "./dialogsReducer";
 
 export type PostType = {
     id: number
@@ -114,25 +114,3 @@ export const store: StoreType = {
     }
 }
 
-export const addPostAC = () => {
-    return {
-        type: "ADD-POST",
-    } as const
-}
-export const changeNewPostAC = (text: string) => {
-    return {
-        type: "CHANGE-NEW-POST",
-        text: text
-    } as const
-}
-export const addMessageAC = () => {
-    return {
-        type: "ADD-MESSAGE"
-    } as const
-}
-export const changeNewMessageAC = (text: string) => {
-    return {
-        type: "CHANGE-NEW-MESSAGE",
-        text: text
-    } as const
-}
