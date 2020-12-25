@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from "react";
 import s from "./NewPost.module.css"
-import {ActionsTypes} from "../../../../redux/Store";
 import {addPostAC, changeNewPostAC} from "../../../../redux/postsReducer";
+import {ActionsTypes} from "../../../../types/entities";
 
 type NewPostType = {
     value: string

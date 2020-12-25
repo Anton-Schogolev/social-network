@@ -8,29 +8,30 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
-import {StoreType} from "./redux/Store";
+import {ActionsTypes, StateType} from "./types/entities";
 
 type PropsType = {
-    store: StoreType
+    state: StateType
+    dispatch:(action:ActionsTypes)=>void
 }
 
-function App({store}: PropsType) {
+function App({state,dispatch}: PropsType) {
     return (
         <BrowserRouter>
             <div className="App">
                 <Header/>
-                <Nav friends={store.getState().nav.friends}/>
+                <Nav friends={state.nav.friends}/>
                 <div className={"container"}>
 
                     <Route exact path={"/"} render={
                         () => <Profile
-                            state={store.getState().posts}
-                            dispatch={store.dispatch.bind(store)}
+                            state={state.posts}
+                            dispatch={dispatch}
                         />}/>
                     <Route path={"/Dialogs"} render={
                         () => <Dialogs
-                            state={store.getState().dialogs}
-                            dispatch={store.dispatch.bind(store)}
+                            state={state.dialogs}
+                            dispatch={dispatch}
                         />}/>
                     <Route path={"/news"} render={() => <News/>}/>
                     <Route path={"/music"} render={() => <Music/>}/>

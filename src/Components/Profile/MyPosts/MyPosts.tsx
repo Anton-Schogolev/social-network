@@ -1,7 +1,7 @@
 import React from "react";
 import {Post} from "./Post/Post";
 import {NewPost} from "./NewPost/NewPost";
-import {ActionsTypes, PostsPropsType} from "../../../redux/Store";
+import {ActionsTypes, PostsPropsType} from "../../../types/entities";
 
 type PropsType = {
     state: PostsPropsType

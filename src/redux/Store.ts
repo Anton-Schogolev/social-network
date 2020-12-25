@@ -1,56 +1,10 @@
-/*let rerenderFullTree = (state: AppPropsType) => {
-    console.log("rerender error")
-}*/
-
-import {addPostAC, changeNewPostAC, postsReducer} from "./postsReducer";
+import {postsReducer} from "./postsReducer";
 import {navReducer} from "./navReducer";
-import {addMessageAC, changeNewMessageAC, dialogsReducer} from "./dialogsReducer";
+import {dialogsReducer} from "./dialogsReducer";
+import {ActionsTypes, StateType} from "../types/entities";
 
-export type PostType = {
-    id: number
-    text: string
-    ava: string
-    amountOfLikes: number
-}
-export type PostsPropsType = {
-    postsArray: Array<PostType>
-    newPost: string
-}
 const ava = "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
 
-
-export type DialogsDataType = {
-    id: number
-    name: string
-}
-export type MessageDataType = {
-    id: number
-    message: string
-    userId: number
-}
-export type DialogsPropsType = {
-    dialogsProps: Array<DialogsDataType>
-    messageProps: Array<MessageDataType>
-    newMessage: string
-}
-
-
-export type NavType = {
-    friends: Array<DialogsDataType>
-}
-
-
-export type StateType = {
-    dialogs: DialogsPropsType
-    posts: PostsPropsType
-    nav: NavType
-}
-
-export type ActionsTypes =
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof changeNewMessageAC> |
-    ReturnType<typeof addPostAC> |
-    ReturnType<typeof changeNewPostAC>
 
 export type StoreType = {
     _state: StateType

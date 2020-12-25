@@ -1,6 +1,14 @@
-import {ActionsTypes, PostsPropsType} from "./Store";
+import {ActionsTypes, PostsPropsType} from "../types/entities";
 
-export const postsReducer = (state: PostsPropsType, action: ActionsTypes) => {
+const initialState: PostsPropsType = {
+    postsArray: [
+        {id: 0, ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg", text: "Hey! How are you?", amountOfLikes: 26},
+        {id: 1, ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg", text: "It's my first post.", amountOfLikes: 14}
+    ],
+    newPost: ""
+}
+
+export const postsReducer = (state: PostsPropsType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case "ADD-POST": {
             state.postsArray.unshift({

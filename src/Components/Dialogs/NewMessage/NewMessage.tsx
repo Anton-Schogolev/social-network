@@ -1,7 +1,7 @@
 import React, {KeyboardEvent, ChangeEvent} from "react";
 import s from "./NewMessage.module.css";
-import {ActionsTypes} from "../../../redux/Store";
 import {addMessageAC, changeNewMessageAC} from "../../../redux/dialogsReducer";
+import {ActionsTypes} from "../../../types/entities";
 
 type PropsType = {
     value: string
@@ -25,9 +25,6 @@ export function NewMessage({value, dispatch}: PropsType) {
 
     return (
         <div className={s.container}>
-            {/*<div className={s.space}>
-                <div className={s.ava}/>
-            </div>*/}
             <textarea
                 autoFocus
                 className={s.text}
