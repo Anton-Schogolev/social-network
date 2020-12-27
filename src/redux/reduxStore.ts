@@ -9,4 +9,7 @@ const reducers = combineReducers({
     nav: navReducer
 })
 
+export type StateType = ReturnType<typeof reducers>
+
 export const store = createStore(reducers)
+//export type StoreType = typeof store

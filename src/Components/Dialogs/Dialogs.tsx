@@ -2,16 +2,14 @@ import React from "react";
 import s from "./Dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
 import {Message} from "./Message/Message";
-import {NewMessage} from "./NewMessage/NewMessage";
-import {ActionsTypes, DialogsPropsType} from "../../types/entities";
+import {DialogsPropsType} from "../../types/entities";
+import NewMessage from "./NewMessage/NewMessage";
+import {StateType} from "../../redux/reduxStore";
+import {connect} from "react-redux";
 
-type PropsType = {
-    state: DialogsPropsType
-    dispatch: (action: ActionsTypes) => void
-}
+type MapStateToPropsType = { state: DialogsPropsType }
 
-export const Dialogs: React.FC<PropsType> = ({state, dispatch}) => {
-
+const Dialogs: React.FC<MapStateToPropsType> = ({state}) => {
     const dialogMap = state.dialogsProps.map(x => {
         return <Dialog key={x.id} id={x.id} name={x.name}/>
     })
@@ -29,9 +27,13 @@ export const Dialogs: React.FC<PropsType> = ({state, dispatch}) => {
             </div>
             <div className={s.messages}>
                 <div className={s.allMassages}>{messageMap}</div>
-                <NewMessage value={state.newMessage} dispatch={dispatch}/>
+                <NewMessage/>
 
             </div>
         </div>
     )
 }
+
+const mapStateToProps = (state: StateType): MapStateToPropsType => ({state: state.dialogs})
+
+export default connect(mapStateToProps, {})(Dialogs)

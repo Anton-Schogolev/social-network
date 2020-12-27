@@ -2,12 +2,14 @@ import React from "react";
 import s from "./Nav.module.css"
 import {NavLink} from "react-router-dom";
 import {DialogsDataType} from "../../types/entities";
+import {connect} from "react-redux";
+import {StateType} from "../../redux/reduxStore";
 
-type PropsType = {
+type MapStateToPropsType = {
     friends: Array<DialogsDataType>
 }
 
-export function Nav({friends}: PropsType) {
+function Nav({friends}: MapStateToPropsType) {
     const friendsRender = friends.map(fr => {
         return (
             <div key={fr.id} className={s.friend}>
@@ -34,3 +36,7 @@ export function Nav({friends}: PropsType) {
         </nav>
     )
 }
+
+const mapStateToProps = (state: StateType):MapStateToPropsType => ({friends: state.nav.friends})
+
+export default connect(mapStateToProps,{})(Nav)

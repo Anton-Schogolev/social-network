@@ -28,11 +28,6 @@ export type DialogsPropsType = {
 export type NavType = {
     friends: Array<DialogsDataType>
 }
-export type StateType = {
-    dialogs: DialogsPropsType
-    posts: PostsPropsType
-    nav: NavType
-}
 export type ActionsTypes =
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof changeNewMessageAC> |

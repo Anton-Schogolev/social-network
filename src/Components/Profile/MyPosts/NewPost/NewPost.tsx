@@ -2,19 +2,22 @@ import React, {ChangeEvent} from "react";
 import s from "./NewPost.module.css"
 import {addPostAC, changeNewPostAC} from "../../../../redux/postsReducer";
 import {ActionsTypes} from "../../../../types/entities";
+import {connect} from "react-redux";
+import {StateType} from "../../../../redux/reduxStore";
 
-type NewPostType = {
-    value: string
-    dispatch: (action: ActionsTypes) => void
+type MapStateToPropsType = { value: string }
+type MapDispatchToPropsType = {
+    changeNewPost: (text: string) => void
+    addPost: () => void
 }
 
-export function NewPost({value, dispatch}: NewPostType) {
+function NewPost({value, addPost, changeNewPost}: MapStateToPropsType & MapDispatchToPropsType) {
     const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(changeNewPostAC(e.currentTarget.value))
+        changeNewPost(e.currentTarget.value)
     }
     const onAddPostClick = () => {
-        dispatch(addPostAC())
-        dispatch(changeNewPostAC(""))
+        addPost()
+        changeNewPost("")
     }
     return (
         <div>
@@ -27,3 +30,12 @@ export function NewPost({value, dispatch}: NewPostType) {
         </div>
     )
 }
+
+
+const mapStateToProps = (state: StateType): MapStateToPropsType => ({value: state.posts.newPost})
+const mapDispatchToProps = (dispatch: (action: ActionsTypes) => void): MapDispatchToPropsType => ({
+    changeNewPost: (text: string) => dispatch(changeNewPostAC(text)),
+    addPost: () => dispatch(addPostAC())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPost)

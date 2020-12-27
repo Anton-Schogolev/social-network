@@ -1,26 +1,29 @@
 import React from "react";
 import {Post} from "./Post/Post";
-import {NewPost} from "./NewPost/NewPost";
-import {ActionsTypes, PostsPropsType} from "../../../types/entities";
+import NewPost from "./NewPost/NewPost";
+import {PostType} from "../../../types/entities";
+import {StateType} from "../../../redux/reduxStore";
+import {connect} from "react-redux";
 
-type PropsType = {
-    state: PostsPropsType
-    dispatch: (action: ActionsTypes) => void
-}
+type MapStateToProps = { posts: Array<PostType> }
 
-export const MyPosts: React.FC<PropsType> = ({state, dispatch}) => {
+const MyPosts: React.FC<MapStateToProps> = ({posts}) => {
 
-    const postDataMap = state.postsArray.map(x => {
+    const postDataMap = (x: PostType): JSX.Element => {
         return (
             <Post key={x.id} text={x.text} ava={x.ava} amountOfLikes={x.amountOfLikes} id={x.id}/>
         )
-    })
+    }
     return (
         <div>
             <h4>My posts</h4>
-            <NewPost value={state.newPost} dispatch={dispatch}/>
-            {postDataMap}
+            <NewPost/>
+            {posts.map(postDataMap)}
         </div>
     )
 }
 
+
+const mapStateToProps = (state: StateType): MapStateToProps => ({posts: state.posts.postsArray})
+
+export default connect(mapStateToProps, {})(MyPosts)

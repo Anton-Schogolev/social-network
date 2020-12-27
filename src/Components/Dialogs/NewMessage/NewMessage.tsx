@@ -1,24 +1,32 @@
 import React, {KeyboardEvent, ChangeEvent} from "react";
 import s from "./NewMessage.module.css";
+import {connect} from "react-redux";
 import {addMessageAC, changeNewMessageAC} from "../../../redux/dialogsReducer";
 import {ActionsTypes} from "../../../types/entities";
+import {StateType} from "../../../redux/reduxStore";
 
-type PropsType = {
-    value: string
-    dispatch: (action: ActionsTypes) => void
+type MapStateToPropsType = { value: string }
+type MapDispatchToPropsType = {
+    changeNewMessage: (text: string) => void
+    addMessage: () => void
 }
 
-export function NewMessage({value, dispatch}: PropsType) {
+const NewMessage: React.FC<MapStateToPropsType & MapDispatchToPropsType> = (
+    {
+        value,
+        addMessage,
+        changeNewMessage
+    }) => {
     const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(changeNewMessageAC(e.currentTarget.value))
+        changeNewMessage(e.currentTarget.value)
     }
     const onEnterText = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && !e.shiftKey && value.trim() !== "") {
-            dispatch(addMessageAC())
-            dispatch(changeNewMessageAC(""))
+            addMessage()
+            changeNewMessage("")
             e.preventDefault()
         } else if (e.key === "Enter" && !e.shiftKey) {
-            dispatch(changeNewMessageAC(""))
+            changeNewMessage("")
             e.preventDefault()
         }
     }
@@ -35,3 +43,11 @@ export function NewMessage({value, dispatch}: PropsType) {
         </div>
     )
 }
+
+const mapStateToProps = (state: StateType): MapStateToPropsType => ({value: state.dialogs.newMessage})
+const mapDispatchToProps = (dispatch: (action: ActionsTypes) => void) => ({
+    changeNewMessage: (text: string) => dispatch(changeNewMessageAC(text)),
+    addMessage: () => dispatch(addMessageAC())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewMessage)

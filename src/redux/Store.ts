@@ -1,7 +1,8 @@
 import {postsReducer} from "./postsReducer";
 import {navReducer} from "./navReducer";
 import {dialogsReducer} from "./dialogsReducer";
-import {ActionsTypes, StateType} from "../types/entities";
+import {ActionsTypes} from "../types/entities";
+import {StateType} from "./reduxStore";
 
 const ava = "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
 
