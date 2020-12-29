@@ -1,5 +1,6 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
 import {addPostAC, changeNewPostAC} from "../redux/postsReducer";
+import {followAC, unfollowAC} from "../redux/usersReducer";
 
 export type PostType = {
     id: number
@@ -28,8 +29,25 @@ export type DialogsPropsType = {
 export type NavType = {
     friends: Array<DialogsDataType>
 }
+export type AddressType = {
+    city?: string
+    country: string
+}
+export type UserType = {
+    id: number
+    name: string
+    status: string
+    ava: string
+    followed: boolean
+    address: AddressType
+}
+export type UsersPropsType = {
+    users: UserType[]
+}
 export type ActionsTypes =
     ReturnType<typeof addMessageAC> |
     ReturnType<typeof changeNewMessageAC> |
     ReturnType<typeof addPostAC> |
-    ReturnType<typeof changeNewPostAC>
+    ReturnType<typeof changeNewPostAC> |
+    ReturnType<typeof followAC> |
+    ReturnType<typeof unfollowAC>

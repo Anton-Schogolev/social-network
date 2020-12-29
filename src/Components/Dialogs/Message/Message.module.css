@@ -17,7 +17,7 @@
     border-radius: 10px;
     max-width: 70%;
     padding: 10px;
-    word-wrap: break-word;
+    word-break: break-word;
 }
 
 .messageR {

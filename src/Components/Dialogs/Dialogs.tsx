@@ -17,7 +17,7 @@ const Dialogs: React.FC<MapStateToPropsType> = ({state}) => {
         const name = state.dialogsProps.find(y => y.id === x.userId)
         if (name !== undefined)
             return (
-                <Message id={x.id} name={name.name} message={x.message} userID={x.userId}/>)
+                <Message key={x.id} id={x.id} name={name.name} message={x.message} userID={x.userId}/>)
         else return undefined
     })
     return (

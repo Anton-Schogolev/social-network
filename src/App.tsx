@@ -8,6 +8,7 @@ import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
+import Users from "./Components/Users/Users";
 
 
 function App() {
@@ -17,12 +18,12 @@ function App() {
                 <Header/>
                 <Nav/>
                 <div className={"container"}>
-
                     <Route exact path={"/"} render={() => <Profile/>}/>
                     <Route path={"/Dialogs"} render={() => <Dialogs/>}/>
                     <Route path={"/news"} render={() => <News/>}/>
                     <Route path={"/music"} render={() => <Music/>}/>
                     <Route path={"/settings"} render={() => <Settings/>}/>
+                    <Route path={"/users"} render={() => <Users/>}/>
                 </div>
             </div>
         </BrowserRouter>

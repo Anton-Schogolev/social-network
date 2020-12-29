@@ -4,6 +4,6 @@ import React from "react";
 
 export function News() {
     return <>
-        News
+        We all will die
     </>
 }

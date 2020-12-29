@@ -8,7 +8,7 @@ const ava = "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg
 
 
 export type StoreType = {
-    _state: StateType
+    _state: any
     _callSubscriber: () => void
     subscribe: (observer: () => void) => void
     getState: () => StateType

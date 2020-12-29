@@ -1,0 +1,33 @@
+.container{
+    display: grid;
+    grid-template-columns: 65px 1fr;
+    gap: 1em;
+    padding-bottom: 20px;
+}
+
+.data{
+    border: solid #55abf6 1px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-areas: "name loc" "status loc";
+    padding: 10px;
+}
+
+.name{
+    grid-area: name;
+}
+
+.status{
+    grid-area: status;
+    font-size: 12px;
+}
+.location{
+    grid-area: loc;
+    justify-self: right;
+}
+.ava{
+    border-radius: 50%;
+}
+.avaContainer{
+    text-align: center;
+}
