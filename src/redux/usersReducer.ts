@@ -1,4 +1,4 @@
-import {ActionsTypes, UsersPropsType} from "../types/entities";
+import {UsersActionsType, UsersPropsType, UserType} from "../types/entities";
 
 const initialState: UsersPropsType = {
     users: [
@@ -13,7 +13,7 @@ const initialState: UsersPropsType = {
                 country: "Belarus"
             }
         },
-        {
+        /*{
             id: 2,
             name: "Den",
             ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
@@ -23,23 +23,20 @@ const initialState: UsersPropsType = {
                 city: "Moscow",
                 country: "Russia"
             }
-        }
+        }*/
     ]
 }
 
-export const usersReducer = (state: UsersPropsType = initialState, action: ActionsTypes) => {
+export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType) => {
     switch (action.type) {
         case "FOLLOW": {
-            return {
-                ...state,
-                users: state.users.map(us => us.id === action.userId ? {...us, followed: true} : us)
-            }
+            return {users: state.users.map(us => us.id === action.userId ? {...us, followed: true} : us)}
         }
         case "UNFOLLOW": {
-            return {
-                ...state,
-                users: state.users.map(us => us.id === action.userId ? {...us, followed: false} : us)
-            }
+            return {users: state.users.map(us => us.id === action.userId ? {...us, followed: false} : us)}
+        }
+        case "SET_USERS": {
+            return {users: [...action.users]}
         }
         default:
             return state
@@ -55,5 +52,11 @@ export const unfollowAC = (id: number) => {
     return {
         type: "UNFOLLOW",
         userId: id
+    } as const
+}
+export const setUsersAC = (users: UserType[]) => {
+    return {
+        type: "SET_USERS",
+        users: users
     } as const
 }

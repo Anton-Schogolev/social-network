@@ -11,6 +11,7 @@
     display: grid;
     grid-template-areas: "name loc" "status loc";
     padding: 10px;
+    background: #fff;
 }
 
 .name{

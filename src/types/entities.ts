@@ -1,6 +1,6 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
 import {addPostAC, changeNewPostAC} from "../redux/postsReducer";
-import {followAC, unfollowAC} from "../redux/usersReducer";
+import {followAC, setUsersAC, unfollowAC} from "../redux/usersReducer";
 
 export type PostType = {
     id: number
@@ -44,10 +44,13 @@ export type UserType = {
 export type UsersPropsType = {
     users: UserType[]
 }
-export type ActionsTypes =
-    ReturnType<typeof addMessageAC> |
-    ReturnType<typeof changeNewMessageAC> |
-    ReturnType<typeof addPostAC> |
-    ReturnType<typeof changeNewPostAC> |
-    ReturnType<typeof followAC> |
-    ReturnType<typeof unfollowAC>
+export type ActionsTypes = DialogsActionsType
+    | ProfileActionsType
+    | UsersActionsType
+export type DialogsActionsType = ReturnType<typeof addMessageAC>
+    | ReturnType<typeof changeNewMessageAC>
+export type ProfileActionsType = ReturnType<typeof addPostAC>
+    | ReturnType<typeof changeNewPostAC>
+export type UsersActionsType = ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsersAC>
