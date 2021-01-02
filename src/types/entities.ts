@@ -1,6 +1,6 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
 import {addPostAC, changeNewPostAC} from "../redux/postsReducer";
-import {changePageAC, followAC, setTotalNumberAC, setUsersAC, unfollowAC} from "../redux/usersReducer";
+import {changePageAC, followAC, setIsFetchingAC, setTotalNumberAC, setUsersAC, unfollowAC} from "../redux/usersReducer";
 
 export type PostType = {
     id: number
@@ -46,6 +46,7 @@ export type UsersPropsType = {
     currentPage: number
     pageSize: number
     totalNumber: number
+    isFetching: boolean
 }
 export type ActionsTypes = DialogsActionsType
     | ProfileActionsType
@@ -59,3 +60,4 @@ export type UsersActionsType = ReturnType<typeof followAC>
     | ReturnType<typeof setUsersAC>
     | ReturnType<typeof changePageAC>
     | ReturnType<typeof setTotalNumberAC>
+    | ReturnType<typeof setIsFetchingAC>

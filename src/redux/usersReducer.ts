@@ -27,10 +27,11 @@ const initialState: UsersPropsType = {
     ],
     pageSize: 5,
     currentPage: 1,
-    totalNumber: 1
+    totalNumber: 1,
+    isFetching: false
 }
 
-export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType):UsersPropsType => {
+export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType): UsersPropsType => {
     switch (action.type) {
         case "FOLLOW": {
             return {...state, users: state.users.map(us => us.id === action.userId ? {...us, followed: true} : us)}
@@ -46,6 +47,9 @@ export const usersReducer = (state: UsersPropsType = initialState, action: Users
         }
         case "SET_TOTAL_NUMBER": {
             return {...state, totalNumber: action.totalNumber}
+        }
+        case "SET_IS_FETCHING": {
+            return {...state, isFetching: action.isFetching}
         }
         default:
             return state
@@ -79,5 +83,11 @@ export const setTotalNumberAC = (totalNumber: number) => {
     return {
         type: "SET_TOTAL_NUMBER",
         totalNumber: totalNumber
+    } as const
+}
+export const setIsFetchingAC = (isFetching: boolean) => {
+    return {
+        type: "SET_IS_FETCHING",
+        isFetching: isFetching
     } as const
 }
