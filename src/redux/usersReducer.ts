@@ -24,19 +24,28 @@ const initialState: UsersPropsType = {
                 country: "Russia"
             }
         }*/
-    ]
+    ],
+    pageSize: 5,
+    currentPage: 1,
+    totalNumber: 1
 }
 
-export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType) => {
+export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType):UsersPropsType => {
     switch (action.type) {
         case "FOLLOW": {
-            return {users: state.users.map(us => us.id === action.userId ? {...us, followed: true} : us)}
+            return {...state, users: state.users.map(us => us.id === action.userId ? {...us, followed: true} : us)}
         }
         case "UNFOLLOW": {
-            return {users: state.users.map(us => us.id === action.userId ? {...us, followed: false} : us)}
+            return {...state, users: state.users.map(us => us.id === action.userId ? {...us, followed: false} : us)}
         }
         case "SET_USERS": {
-            return {users: [...action.users]}
+            return {...state, users: [...action.users]}
+        }
+        case "CHANGE_PAGE": {
+            return {...state, currentPage: action.page}
+        }
+        case "SET_TOTAL_NUMBER": {
+            return {...state, totalNumber: action.totalNumber}
         }
         default:
             return state
@@ -58,5 +67,17 @@ export const setUsersAC = (users: UserType[]) => {
     return {
         type: "SET_USERS",
         users: users
+    } as const
+}
+export const changePageAC = (page: number) => {
+    return {
+        type: "CHANGE_PAGE",
+        page: page
+    } as const
+}
+export const setTotalNumberAC = (totalNumber: number) => {
+    return {
+        type: "SET_TOTAL_NUMBER",
+        totalNumber: totalNumber
     } as const
 }
