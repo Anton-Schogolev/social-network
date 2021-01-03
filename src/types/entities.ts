@@ -8,7 +8,7 @@ export type PostType = {
     ava: string
     amountOfLikes: number
 }
-export type ProfileUserType = {
+export type ProfileUserTypeWithNoNull = {
     "aboutMe": string
     "contacts": {
         "facebook": string | null
@@ -29,6 +29,7 @@ export type ProfileUserType = {
         "large": string | null
     }
 }
+export type ProfileUserType = null | ProfileUserTypeWithNoNull
 export type ProfilePropsType = {
     postsArray: Array<PostType>
     newPost: string
