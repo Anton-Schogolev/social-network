@@ -1,14 +1,14 @@
 import React from "react";
 import {StateType} from "../../redux/reduxStore";
-import {ActionsTypes, UsersPropsType, UserType} from "../../types/entities";
+import {UsersPropsType, UserType} from "../../types/entities";
 import {connect} from "react-redux";
 import {
-    changePageAC,
-    followAC,
-    setIsFetchingAC,
-    setTotalNumberAC,
-    setUsersAC,
-    unfollowAC
+    changePage,
+    follow,
+    setIsFetching,
+    setTotalNumber,
+    setUsers,
+    unfollow
 } from "../../redux/usersReducer";
 import axios from "axios";
 import {Users} from "./User/Users";
@@ -28,8 +28,8 @@ type AxiosGetType = {
         "name": string
         "id": number
         "photos": {
-            "small": string
-            "large": string
+            "small": string | null
+            "large": string | null
         },
         "status": string
         "followed": boolean
@@ -43,20 +43,6 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
     numberOfPages = 1
 
     componentDidMount() {
-        /*axios.get<AxiosGetType>(
-            `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`
-        ).then(state => {
-            this.numberOfPages = Math.ceil(state.data.totalCount / 5)
-            this.props.setTotalNumber(state.data.totalCount)
-            this.props.setUsers(state.data.items.map(it => ({
-                id: it.id,
-                name: it.name,
-                status: it.status,
-                ava: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
-                followed: it.followed,
-                address: {country: "Belarus"}
-            })))
-        })*/
         this.changePage(1)
     }
 
@@ -67,13 +53,16 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
             `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`
         ).then(state => {
             this.props.setIsFetching(false)
-            this.numberOfPages = Math.ceil(state.data.totalCount / 5)
+            this.numberOfPages = Math.ceil(state.data.totalCount / this.props.pageSize)
             this.props.setTotalNumber(state.data.totalCount)
             this.props.setUsers(state.data.items.map(it => ({
                 id: it.id,
                 name: it.name,
                 status: it.status,
-                ava: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+                photos: {
+                    small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+                    large: it.photos.large
+                },
                 followed: it.followed,
                 address: {country: "Belarus"}
             })))
@@ -102,13 +91,6 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     pageSize: state.users.pageSize,
     isFetching: state.users.isFetching
 })
-const mapDispatchToProps = (dispatch: (action: ActionsTypes) => void): MapDispatchToPropsType => ({
-    follow: userId => dispatch(followAC(userId)),
-    unfollow: userId => dispatch(unfollowAC(userId)),
-    setUsers: users => dispatch(setUsersAC(users)),
-    changePage: newPage => dispatch(changePageAC(newPage)),
-    setTotalNumber: totalNumber => dispatch(setTotalNumberAC(totalNumber)),
-    setIsFetching: isFetching => dispatch(setIsFetchingAC(isFetching))
-})
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect<MapStateToPropsType, MapDispatchToPropsType,{}, StateType>(mapStateToProps, {
+    follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching})(UsersContainer)

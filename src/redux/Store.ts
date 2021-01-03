@@ -1,10 +1,7 @@
-import {postsReducer} from "./postsReducer";
-import {navReducer} from "./navReducer";
-import {dialogsReducer} from "./dialogsReducer";
-import {ActionsTypes} from "../types/entities";
-import {StateType} from "./reduxStore";
 
-const ava = "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
+
+export const ava = "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
+/*
 
 
 export type StoreType = {
@@ -62,10 +59,11 @@ export const store: StoreType = {
     },
 
     dispatch(action) {
-        this._state.posts = postsReducer(this._state.posts, action)
+        this._state.posts = profileReducer(this._state.posts, action)
         this._state.dialogs = dialogsReducer(this._state.dialogs, action)
         this._state.nav = navReducer(this._state.nav, action)
         this._callSubscriber()
     }
 }
 
+*/

@@ -1,6 +1,7 @@
 import {UserType} from "../../../types/entities";
 import React from "react";
 import s from "./User.module.css"
+import {NavLink} from "react-router-dom";
 
 type PropsType = {
     user: UserType
@@ -10,14 +11,16 @@ type PropsType = {
 
 export function User(props: PropsType) {
     const buttonFollowHandler = () => {
-        if(props.user.followed)
+        if (props.user.followed)
             props.unfollow(props.user.id)
         else
             props.follow(props.user.id)
     }
     return <div className={s.container}>
         <div className={s.avaContainer}>
-            <img className={s.ava} width={"65px"} src={props.user.ava} alt={"ava"}/>
+            <NavLink to={"/profile/" + props.user.id}>
+                <img className={s.ava} width={"65px"} src={props.user.photos.small} alt={"ava"}/>
+            </NavLink>
             <button onClick={buttonFollowHandler}>
                 {props.user.followed ? "unfollow" : "follow"}
             </button>

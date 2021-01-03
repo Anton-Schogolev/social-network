@@ -5,7 +5,10 @@ const initialState: UsersPropsType = {
         {
             id: 1,
             name: "Dimych",
-            ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+            photos: {
+                small: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+                large: null
+            },
             status: "I am boss",
             followed: false,
             address: {
@@ -25,7 +28,7 @@ const initialState: UsersPropsType = {
             }
         }*/
     ],
-    pageSize: 5,
+    pageSize: 10,
     currentPage: 1,
     totalNumber: 1,
     isFetching: false
@@ -55,37 +58,37 @@ export const usersReducer = (state: UsersPropsType = initialState, action: Users
             return state
     }
 }
-export const followAC = (id: number) => {
+export const follow = (id: number) => {
     return {
         type: "FOLLOW",
         userId: id
     } as const
 }
-export const unfollowAC = (id: number) => {
+export const unfollow = (id: number) => {
     return {
         type: "UNFOLLOW",
         userId: id
     } as const
 }
-export const setUsersAC = (users: UserType[]) => {
+export const setUsers = (users: UserType[]) => {
     return {
         type: "SET_USERS",
         users: users
     } as const
 }
-export const changePageAC = (page: number) => {
+export const changePage = (page: number) => {
     return {
         type: "CHANGE_PAGE",
         page: page
     } as const
 }
-export const setTotalNumberAC = (totalNumber: number) => {
+export const setTotalNumber = (totalNumber: number) => {
     return {
         type: "SET_TOTAL_NUMBER",
         totalNumber: totalNumber
     } as const
 }
-export const setIsFetchingAC = (isFetching: boolean) => {
+export const setIsFetching = (isFetching: boolean) => {
     return {
         type: "SET_IS_FETCHING",
         isFetching: isFetching

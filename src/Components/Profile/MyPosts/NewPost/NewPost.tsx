@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import s from "./NewPost.module.css"
-import {addPostAC, changeNewPostAC} from "../../../../redux/postsReducer";
+import {addPostAC, changeNewPostAC} from "../../../../redux/profileReducer";
 import {ActionsTypes} from "../../../../types/entities";
 import {connect} from "react-redux";
 import {StateType} from "../../../../redux/reduxStore";

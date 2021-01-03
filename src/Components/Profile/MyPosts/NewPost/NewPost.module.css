@@ -5,4 +5,5 @@
     box-shadow: inset 8px 8px 8px 0 #dddddd;
     outline: none;
     border-radius: 6px;
+    resize: none;
 }

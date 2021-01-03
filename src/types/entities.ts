@@ -1,6 +1,6 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
-import {addPostAC, changeNewPostAC} from "../redux/postsReducer";
-import {changePageAC, followAC, setIsFetchingAC, setTotalNumberAC, setUsersAC, unfollowAC} from "../redux/usersReducer";
+import {addPostAC, changeNewPostAC, setUserProfile} from "../redux/profileReducer";
+import {changePage, follow, setIsFetching, setTotalNumber, setUsers, unfollow} from "../redux/usersReducer";
 
 export type PostType = {
     id: number
@@ -8,9 +8,31 @@ export type PostType = {
     ava: string
     amountOfLikes: number
 }
-export type PostsPropsType = {
+export type ProfileUserType = {
+    "aboutMe": string
+    "contacts": {
+        "facebook": string | null
+        "website": string | null
+        "vk": string | null
+        "twitter": string | null
+        "instagram": string | null
+        "youtube": string | null
+        "github": string | null
+        "mainLink": string | null
+    },
+    "lookingForAJob": boolean
+    "lookingForAJobDescription": string | null
+    "fullName": string
+    "userId": number
+    "photos": {
+        "small": string | null
+        "large": string | null
+    }
+}
+export type ProfilePropsType = {
     postsArray: Array<PostType>
     newPost: string
+    userProfile: ProfileUserType
 }
 export type DialogsDataType = {
     id: number
@@ -37,7 +59,10 @@ export type UserType = {
     id: number
     name: string
     status: string
-    ava: string
+    photos: {
+        small: string
+        large: string | null
+    }
     followed: boolean
     address: AddressType
 }
@@ -55,9 +80,10 @@ export type DialogsActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof changeNewMessageAC>
 export type ProfileActionsType = ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostAC>
-export type UsersActionsType = ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof changePageAC>
-    | ReturnType<typeof setTotalNumberAC>
-    | ReturnType<typeof setIsFetchingAC>
+    | ReturnType<typeof setUserProfile>
+export type UsersActionsType = ReturnType<typeof follow>
+    | ReturnType<typeof unfollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof changePage>
+    | ReturnType<typeof setTotalNumber>
+    | ReturnType<typeof setIsFetching>
