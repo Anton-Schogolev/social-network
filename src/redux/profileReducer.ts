@@ -16,27 +16,27 @@ const initialState: ProfilePropsType = {
         }
     ],
     newPost: "",
-    userProfile: null//{
-    /*aboutMe: "я круто чувак 1001%",
+    userProfile: {
+    aboutMe: "",
     contacts: {
-        facebook: "facebook.com",
+        facebook: null,
         website: null,
-        vk: "vk.com/dimych",
-        twitter: "https://twitter.com/@sdf",
-        instagram: "instagra.com/sds",
+        vk: null,
+        twitter: null,
+        instagram: null,
         youtube: null,
-        github: "github.com",
+        github: null,
         mainLink: null
     },
-    lookingForAJob: true,
-    lookingForAJobDescription: "не ищу, а дурачусь",
-    fullName: "samurai dimych",
-    userId: 2,
+    lookingForAJob: false,
+    lookingForAJobDescription: null,
+    fullName: "",
+    userId: -1,
     photos: {
-        small: "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
-        large: "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
-    }*/
-    //}
+        small: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+        large: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
+    }
+    }
 }
 
 export const profileReducer = (state: ProfilePropsType = initialState, action: ProfileActionsType) => {
