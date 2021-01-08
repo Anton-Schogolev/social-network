@@ -1,12 +1,12 @@
 import React from "react";
 import {Profile} from "./Profile";
-import axios from "axios";
 import {connect} from "react-redux";
 import {setUserProfile} from "../../redux/profileReducer";
 import {StateType} from "../../redux/reduxStore";
 import {ProfileUserType} from "../../types/entities";
-import {RouteComponentProps, withRouter } from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {Preloader} from "../common/Preloader";
+import {ProfileAPI} from "../../api/api";
 
 
 type MapStateToPropsType = {
@@ -20,13 +20,13 @@ type MapDispatchToPropsType = {
 class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps<{userid?:string}>> {
     componentDidMount() {
         const userId = this.props.match.params.userid
-        axios.get<ProfileUserType>(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
-            .then(response => {
+        ProfileAPI.getProfile(userId)
+            .then(data => {
                 this.props.setUserProfile({
-                    ...response.data,
+                    ...data,
                     photos: {
-                        small: response.data.photos.small,
-                        large: response.data.photos.large
+                        small: data.photos.small,
+                        large: data.photos.large
                     }
                 })
             })

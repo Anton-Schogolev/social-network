@@ -21,9 +21,7 @@ export const Users = (props: PropsType) => {
     }
     const Span = ({value, Class}: { value: number; Class?: boolean }) => <span
         className={Class ? s.activePage : ""}
-        onClick={() => {
-            props.changePage(value)
-        }}>{value} </span>
+        onClick={() => {props.changePage(value)}}>{value} </span>
     const pages = <div>{numbersOfPages[0] >= 2 ?
         <Span value={1}/> : ""}{numbersOfPages[0] <= 2 ? numbersOfPages.map(value =>
         <Span value={value} Class={props.currentPage === value}/>) : (<>... {numbersOfPages.map(value =>
@@ -36,5 +34,6 @@ export const Users = (props: PropsType) => {
         {pages}
         {props.users.map(us => <User key={us.id} user={us} follow={props.follow}
                                      unfollow={props.unfollow}/>)}
+        {pages}
     </>
 }

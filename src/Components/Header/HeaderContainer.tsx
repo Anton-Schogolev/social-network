@@ -4,24 +4,18 @@ import {connect} from "react-redux";
 import {StateType} from "../../redux/reduxStore";
 import {setAuth} from "../../redux/authReducer";
 import {AuthPropsType} from "../../types/entities";
-import axios from "axios";
+import {AuthAPI} from "../../api/api";
 
 type MapStateToPropsType = AuthPropsType
 type MapDispatchToPropsType = {
     setAuth: (id: number, email: string, login: string) => void
 }
 
-type AxiosType = {
-    "id": number
-    "login": string
-    "email": string
-}
 
 class HeaderContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType>{
     componentDidMount() {
-        axios.get<{data: AxiosType}>("https://social-network.samuraijs.com/api/1.0/auth/me", {withCredentials: true}).then(response => {
-            debugger
-            this.props.setAuth(response.data.data.id, response.data.data.email, response.data.data.login)
+        AuthAPI.getAuth().then(data => {
+            this.props.setAuth(data.data.id, data.data.email, data.data.login)
         })
     }
 

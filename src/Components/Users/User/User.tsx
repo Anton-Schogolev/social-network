@@ -2,7 +2,7 @@ import {UserType} from "../../../types/entities";
 import React from "react";
 import s from "./User.module.css"
 import {NavLink} from "react-router-dom";
-import axios from "axios";
+import {UsersAPI} from "../../../api/api";
 
 type PropsType = {
     user: UserType
@@ -13,18 +13,12 @@ type PropsType = {
 export function User(props: PropsType) {
     const buttonFollowHandler = () => {
         if (props.user.followed)
-            axios.delete(
-                `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
-                {withCredentials: true, headers:{"API-KEY":"568bef24-ce98-482a-a370-1dd23b640991"}}
-            ).then(response => {
+            UsersAPI.unfollow(props.user.id).then(response => {
                 if(response.status === 200)
                     props.unfollow(props.user.id)
             })
         else
-            axios.post(
-                `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,{},
-                {withCredentials: true, headers:{"API-KEY":"568bef24-ce98-482a-a370-1dd23b640991"}}
-            ).then(response => {
+            UsersAPI.follow(props.user.id).then(response => {
                 if(response.status === 200)
                     props.follow(props.user.id)
             })

@@ -10,9 +10,9 @@ import {
     setUsers,
     unfollow
 } from "../../redux/usersReducer";
-import axios from "axios";
 import {Users} from "./User/Users";
 import {Preloader} from "../common/Preloader";
+import {UsersAPI} from "../../api/api";
 
 type MapStateToPropsType = UsersPropsType
 type MapDispatchToPropsType = {
@@ -23,21 +23,7 @@ type MapDispatchToPropsType = {
     setTotalNumber: (totalNumber: number) => void
     setIsFetching: (isFetching: boolean) => void
 }
-type AxiosGetType = {
-    "items": Array<{
-        "name": string
-        "id": number
-        "photos": {
-            "small": string | null
-            "large": string | null
-        },
-        "status": string
-        "followed": boolean
-    }>
 
-    "totalCount": number
-    "error": null
-}
 
 class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
     numberOfPages = 1
@@ -49,14 +35,11 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
     changePage = (page: number) => {
         this.props.changePage(page)
         this.props.setIsFetching(true)
-        axios.get<AxiosGetType>(
-            `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`,
-            {withCredentials: true}
-        ).then(response => {
+        UsersAPI.getUsers(this.props.pageSize, page).then(data => {
             this.props.setIsFetching(false)
-            this.numberOfPages = Math.ceil(response.data.totalCount / this.props.pageSize)
-            this.props.setTotalNumber(response.data.totalCount)
-            this.props.setUsers(response.data.items.map(it => ({
+            this.numberOfPages = Math.ceil(data.totalCount / this.props.pageSize)
+            this.props.setTotalNumber(data.totalCount)
+            this.props.setUsers(data.items.map(it => ({
                 id: it.id,
                 name: it.name,
                 status: it.status,
