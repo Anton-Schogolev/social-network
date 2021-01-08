@@ -1,6 +1,7 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
 import {addPostAC, changeNewPostAC, setUserProfile} from "../redux/profileReducer";
 import {changePage, follow, setIsFetching, setTotalNumber, setUsers, unfollow} from "../redux/usersReducer";
+import {setAuth} from "../redux/authReducer";
 
 export type PostType = {
     id: number
@@ -73,9 +74,16 @@ export type UsersPropsType = {
     totalNumber: number
     isFetching: boolean
 }
+export type AuthPropsType = {
+    id: number
+    email: null | string
+    login: string
+    isAuth:boolean
+}
 export type ActionsTypes = DialogsActionsType
     | ProfileActionsType
     | UsersActionsType
+    | AuthActionsType
 export type DialogsActionsType = ReturnType<typeof addMessageAC>
     | ReturnType<typeof changeNewMessageAC>
 export type ProfileActionsType = ReturnType<typeof addPostAC>
@@ -87,3 +95,4 @@ export type UsersActionsType = ReturnType<typeof follow>
     | ReturnType<typeof changePage>
     | ReturnType<typeof setTotalNumber>
     | ReturnType<typeof setIsFetching>
+export type AuthActionsType = ReturnType<typeof setAuth>

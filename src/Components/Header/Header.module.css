@@ -1,4 +1,11 @@
 .header {
     grid-area: h;
     background: aqua;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login {
+    float: right;
 }

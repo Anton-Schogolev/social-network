@@ -3,12 +3,14 @@ import {dialogsReducer} from "./dialogsReducer";
 import {profileReducer} from "./profileReducer";
 import {navReducer} from "./navReducer";
 import {usersReducer} from "./usersReducer";
+import {authReducer} from "./authReducer";
 
 const reducers = combineReducers({
     dialogs: dialogsReducer,
     posts: profileReducer,
     nav: navReducer,
-    users: usersReducer
+    users: usersReducer,
+    auth: authReducer
 })
 
 export type StateType = ReturnType<typeof reducers>

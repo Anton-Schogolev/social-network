@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogsPropsType} from "../types/entities";
+import {DialogsActionsType, DialogsPropsType} from "../types/entities";
 
 const initialState: DialogsPropsType = {
     dialogsProps: [
@@ -18,7 +18,7 @@ const initialState: DialogsPropsType = {
     newMessage: ""
 }
 
-export const dialogsReducer = (state: DialogsPropsType = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: DialogsPropsType = initialState, action: DialogsActionsType) => {
     switch (action.type) {
         case "ADD-MESSAGE": {
             const newMessage = {
