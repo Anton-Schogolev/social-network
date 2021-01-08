@@ -50,12 +50,13 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
         this.props.changePage(page)
         this.props.setIsFetching(true)
         axios.get<AxiosGetType>(
-            `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`
-        ).then(state => {
+            `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${page}`,
+            {withCredentials: true}
+        ).then(response => {
             this.props.setIsFetching(false)
-            this.numberOfPages = Math.ceil(state.data.totalCount / this.props.pageSize)
-            this.props.setTotalNumber(state.data.totalCount)
-            this.props.setUsers(state.data.items.map(it => ({
+            this.numberOfPages = Math.ceil(response.data.totalCount / this.props.pageSize)
+            this.props.setTotalNumber(response.data.totalCount)
+            this.props.setUsers(response.data.items.map(it => ({
                 id: it.id,
                 name: it.name,
                 status: it.status,

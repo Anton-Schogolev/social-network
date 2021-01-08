@@ -2,6 +2,7 @@ import {UserType} from "../../../types/entities";
 import React from "react";
 import s from "./User.module.css"
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 type PropsType = {
     user: UserType
@@ -12,9 +13,21 @@ type PropsType = {
 export function User(props: PropsType) {
     const buttonFollowHandler = () => {
         if (props.user.followed)
-            props.unfollow(props.user.id)
+            axios.delete(
+                `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,
+                {withCredentials: true, headers:{"API-KEY":"568bef24-ce98-482a-a370-1dd23b640991"}}
+            ).then(response => {
+                if(response.status === 200)
+                    props.unfollow(props.user.id)
+            })
         else
-            props.follow(props.user.id)
+            axios.post(
+                `https://social-network.samuraijs.com/api/1.0/follow/${props.user.id}`,{},
+                {withCredentials: true, headers:{"API-KEY":"568bef24-ce98-482a-a370-1dd23b640991"}}
+            ).then(response => {
+                if(response.status === 200)
+                    props.follow(props.user.id)
+            })
     }
     return <div className={s.container}>
         <div className={s.avaContainer}>
