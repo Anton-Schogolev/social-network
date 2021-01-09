@@ -16,17 +16,17 @@ type MapDispatchToPropsType = {
 }
 
 
-class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps<{userid?:string}>> {
+class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps<{ userid?: string }>> {
     componentDidMount() {
         const userId = this.props.match.params.userid
-        setUserProfile(userId)
+        this.props.setUserProfile(userId)
     }
 
     render() {
-        if(this.props.userProfile.userId === Number(this.props.match.params.userid))
-        return (
-            <Profile userProfile={this.props.userProfile}/>
-        )
+        if (this.props.userProfile.userId === Number(this.props.match.params.userid))
+            return (
+                <Profile userProfile={this.props.userProfile}/>
+            )
         else
             return <Preloader/>
     }

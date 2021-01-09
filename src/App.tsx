@@ -9,6 +9,7 @@ import {Settings} from "./Components/Settings/Settings";
 import UsersContainer from "./Components/Users/UsersContainer";
 import ProfileContainer from "./Components/Profile/ProfileContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
+import {Login} from './Components/Login/Login';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <HeaderContainer/>
                 <Nav/>
                 <div className={"container"}>
+                    <Route path={"/login"} render={() => <Login/>}/>
                     <Route path={"/profile/:userid"} render={() => <ProfileContainer/>}/>
                     <Route path={"/Dialogs"} render={() => <Dialogs/>}/>
                     <Route path={"/news"} render={() => <News/>}/>

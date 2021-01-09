@@ -18,7 +18,7 @@ class HeaderContainer extends React.Component<MapStateToPropsType & MapDispatchT
 
     render() {
         return (
-            <Header login={this.props.login} email={this.props.email} id={this.props.id}/>
+            <Header login={this.props.login} email={this.props.email} id={this.props.id} isAuth={this.props.isAuth}/>
         )
     }
 }

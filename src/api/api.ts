@@ -31,6 +31,8 @@ type AuthGetType = {
         "login": string
         "email": string
     }
+    "messages":string[]
+    "resultCode":number
 }
 
 export const UsersAPI = {

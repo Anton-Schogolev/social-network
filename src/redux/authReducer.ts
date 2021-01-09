@@ -29,6 +29,7 @@ type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
 type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
 export const setAuth = (): ThunkType => (dispatch: ThunkDispatchType) => {
     AuthAPI.getAuth().then(data => {
-        dispatch(setAuthAC(data.data.id, data.data.email, data.data.login))
+        if (data.resultCode === 0)
+            dispatch(setAuthAC(data.data.id, data.data.email, data.data.login))
     })
 }
