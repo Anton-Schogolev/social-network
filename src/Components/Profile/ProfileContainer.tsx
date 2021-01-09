@@ -6,30 +6,20 @@ import {StateType} from "../../redux/reduxStore";
 import {ProfileUserType} from "../../types/entities";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {Preloader} from "../common/Preloader";
-import {ProfileAPI} from "../../api/api";
 
 
 type MapStateToPropsType = {
     userProfile: ProfileUserType
 }
 type MapDispatchToPropsType = {
-    setUserProfile: (user: ProfileUserType) => void
+    setUserProfile: (userId?: string) => void
 }
 
 
 class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps<{userid?:string}>> {
     componentDidMount() {
         const userId = this.props.match.params.userid
-        ProfileAPI.getProfile(userId)
-            .then(data => {
-                this.props.setUserProfile({
-                    ...data,
-                    photos: {
-                        small: data.photos.small,
-                        large: data.photos.large
-                    }
-                })
-            })
+        setUserProfile(userId)
     }
 
     render() {

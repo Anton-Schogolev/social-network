@@ -1,37 +1,30 @@
-import {UsersActionsType, UsersPropsType, UserType} from "../types/entities";
+import {ActionsTypes, UsersActionsType, UsersPropsType, UserType} from "../types/entities";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {StateType} from "./reduxStore";
+import {UsersAPI} from "../api/api";
 
 const initialState: UsersPropsType = {
     users: [
         {
             id: 1,
-            name: "Dimych",
+            name: "",
             photos: {
                 small: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
                 large: null
             },
-            status: "I am boss",
+            status: "",
             followed: false,
             address: {
-                city: "Minsk",
-                country: "Belarus"
+                city: "",
+                country: ""
             }
-        },
-        /*{
-            id: 2,
-            name: "Den",
-            ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
-            status: "TypeScript is awesome!",
-            followed: false,
-            address: {
-                city: "Moscow",
-                country: "Russia"
-            }
-        }*/
+        }
     ],
     pageSize: 10,
     currentPage: 1,
     totalNumber: 1,
-    isFetching: false
+    isFetching: false,
+    buttonsDisabled: []
 }
 
 export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType): UsersPropsType => {
@@ -54,17 +47,26 @@ export const usersReducer = (state: UsersPropsType = initialState, action: Users
         case "SET_IS_FETCHING": {
             return {...state, isFetching: action.isFetching}
         }
+        case "TOGGLE_BUTTON_DISABLED": {
+            if (state.buttonsDisabled.some(id => id === action.id))
+                return {
+                    ...state,
+                    buttonsDisabled: state.buttonsDisabled.filter(id => id !== action.id)
+                }
+            else return {...state, buttonsDisabled: [...state.buttonsDisabled, action.id]}
+        }
         default:
             return state
     }
 }
-export const follow = (id: number) => {
+
+export const followAC = (id: number) => {
     return {
         type: "FOLLOW",
         userId: id
     } as const
 }
-export const unfollow = (id: number) => {
+export const unfollowAC = (id: number) => {
     return {
         type: "UNFOLLOW",
         userId: id
@@ -93,4 +95,48 @@ export const setIsFetching = (isFetching: boolean) => {
         type: "SET_IS_FETCHING",
         isFetching: isFetching
     } as const
+}
+export const toggleButtonDisabled = (id: number) => {
+    return {
+        type: "TOGGLE_BUTTON_DISABLED",
+        id
+    } as const
+}
+
+type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
+type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
+export const getUsers = (page: number, pageSize: number): ThunkType => (dispatch: ThunkDispatchType) => {
+    dispatch(changePage(page))
+    dispatch(setIsFetching(true))
+    UsersAPI.getUsers(pageSize, page).then(data => {
+        dispatch(setIsFetching(false))
+        dispatch(setTotalNumber(data.totalCount))
+        dispatch(setUsers(data.items.map(it => ({
+            id: it.id,
+            name: it.name,
+            status: it.status,
+            photos: {
+                small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+                large: it.photos.large
+            },
+            followed: it.followed,
+            address: {country: "Belarus"}
+        }))))
+    })
+}
+export const follow = (userId: number): ThunkType => (dispatch: ThunkDispatchType) => {
+    dispatch(toggleButtonDisabled(userId))
+    UsersAPI.follow(userId).then(response => {
+        dispatch(toggleButtonDisabled(userId))
+        if (response.status === 200)
+            dispatch(followAC(userId))
+    })
+}
+export const unfollow = (userId: number): ThunkType => (dispatch: ThunkDispatchType) => {
+    dispatch(toggleButtonDisabled(userId))
+    UsersAPI.unfollow(userId).then(response => {
+        dispatch(toggleButtonDisabled(userId))
+        if (response.status === 200)
+            dispatch(unfollowAC(userId))
+    })
 }

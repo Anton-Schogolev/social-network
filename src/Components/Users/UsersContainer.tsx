@@ -3,16 +3,13 @@ import {StateType} from "../../redux/reduxStore";
 import {UsersPropsType, UserType} from "../../types/entities";
 import {connect} from "react-redux";
 import {
-    changePage,
-    follow,
+    changePage, follow, getUsers,
     setIsFetching,
     setTotalNumber,
-    setUsers,
-    unfollow
+    setUsers, unfollow
 } from "../../redux/usersReducer";
 import {Users} from "./User/Users";
 import {Preloader} from "../common/Preloader";
-import {UsersAPI} from "../../api/api";
 
 type MapStateToPropsType = UsersPropsType
 type MapDispatchToPropsType = {
@@ -22,6 +19,7 @@ type MapDispatchToPropsType = {
     changePage: (newPage: number) => void
     setTotalNumber: (totalNumber: number) => void
     setIsFetching: (isFetching: boolean) => void
+    getUsers: (page: number, pageSize: number) => void
 }
 
 
@@ -32,25 +30,12 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
         this.changePage(1)
     }
 
+    componentDidUpdate() {
+        this.numberOfPages = Math.ceil(this.props.totalNumber / this.props.pageSize)
+    }
+
     changePage = (page: number) => {
-        this.props.changePage(page)
-        this.props.setIsFetching(true)
-        UsersAPI.getUsers(this.props.pageSize, page).then(data => {
-            this.props.setIsFetching(false)
-            this.numberOfPages = Math.ceil(data.totalCount / this.props.pageSize)
-            this.props.setTotalNumber(data.totalCount)
-            this.props.setUsers(data.items.map(it => ({
-                id: it.id,
-                name: it.name,
-                status: it.status,
-                photos: {
-                    small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
-                    large: it.photos.large
-                },
-                followed: it.followed,
-                address: {country: "Belarus"}
-            })))
-        })
+        this.props.getUsers(page, this.props.pageSize)
     }
 
     render() {
@@ -64,17 +49,21 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
                 changePage={this.changePage}
                 follow={this.props.follow}
                 unfollow={this.props.unfollow}
+                buttonsDisabled={this.props.buttonsDisabled}
             />
     }
 }
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
-    users: state.users.users,
+    ...state.users
+    /*users: state.users.users,
     totalNumber: state.users.totalNumber,
     currentPage: state.users.currentPage,
     pageSize: state.users.pageSize,
-    isFetching: state.users.isFetching
+    isFetching: state.users.isFetching,
+    ButtonsDisabled: state.users.ButtonsDisabled*/
 })
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType,{}, StateType>(mapStateToProps, {
-    follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching})(UsersContainer)
+export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(mapStateToProps, {
+    follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching, getUsers
+})(UsersContainer)

@@ -10,11 +10,12 @@ type PropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
     users: UserType[]
+    buttonsDisabled: number[]
 }
 
 export const Users = (props: PropsType) => {
     const numbersOfPages: number[] = []
-    for (let i = props.currentPage - 4; i < props.currentPage + 4 && i <= props.numberOfPages; i++) {
+    for (let i = props.currentPage - 4; i <= props.currentPage + 4 && i <= props.numberOfPages; i++) {
         if (i < 1)
             i = 1
         numbersOfPages.push(i)
@@ -33,7 +34,7 @@ export const Users = (props: PropsType) => {
     return <>
         {pages}
         {props.users.map(us => <User key={us.id} user={us} follow={props.follow}
-                                     unfollow={props.unfollow}/>)}
+                                     unfollow={props.unfollow} buttonsDisabled={props.buttonsDisabled}/>)}
         {pages}
     </>
 }

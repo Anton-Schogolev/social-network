@@ -1,4 +1,7 @@
-import {ProfileActionsType, ProfilePropsType, ProfileUserType} from "../types/entities";
+import {ActionsTypes, ProfileActionsType, ProfilePropsType, ProfileUserType} from "../types/entities";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {StateType} from "./reduxStore";
+import {ProfileAPI} from "../api/api";
 
 const initialState: ProfilePropsType = {
     postsArray: [
@@ -17,25 +20,25 @@ const initialState: ProfilePropsType = {
     ],
     newPost: "",
     userProfile: {
-    aboutMe: "",
-    contacts: {
-        facebook: null,
-        website: null,
-        vk: null,
-        twitter: null,
-        instagram: null,
-        youtube: null,
-        github: null,
-        mainLink: null
-    },
-    lookingForAJob: false,
-    lookingForAJobDescription: null,
-    fullName: "",
-    userId: -1,
-    photos: {
-        small: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
-        large: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
-    }
+        aboutMe: "",
+        contacts: {
+            facebook: null,
+            website: null,
+            vk: null,
+            twitter: null,
+            instagram: null,
+            youtube: null,
+            github: null,
+            mainLink: null
+        },
+        lookingForAJob: false,
+        lookingForAJobDescription: null,
+        fullName: "",
+        userId: -1,
+        photos: {
+            small: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+            large: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
+        }
     }
 }
 
@@ -69,6 +72,7 @@ export const profileReducer = (state: ProfilePropsType = initialState, action: P
             return state
     }
 }
+
 export const addPostAC = () => {
     return {
         type: "ADD-POST",
@@ -80,9 +84,25 @@ export const changeNewPostAC = (text: string) => {
         text: text
     } as const
 }
-export const setUserProfile = (user: ProfileUserType) => {
+export const setUserProfileAC = (user: ProfileUserType) => {
     return {
         type: "SET_USER_PROFILE",
         user: user
     } as const
+}
+
+type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
+type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
+export const setUserProfile = (userId?: string): ThunkType => (dispatch: ThunkDispatchType) => {
+    ProfileAPI.getProfile(userId)
+        .then(data => {
+            dispatch(setUserProfileAC({
+                    ...data,
+                    photos: {
+                        small: data.photos.small,
+                        large: data.photos.large
+                    }
+                })
+            )
+        })
 }

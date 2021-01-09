@@ -1,6 +1,9 @@
-import {AuthActionsType, AuthPropsType} from "../types/entities";
+import {ActionsTypes, AuthActionsType, AuthPropsType} from "../types/entities";
+import {AuthAPI} from "../api/api";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {StateType} from "./reduxStore"
 
-const initialState: AuthPropsType  = {
+const initialState: AuthPropsType = {
     id: -1,
     email: null,
     login: "",
@@ -16,9 +19,16 @@ export const authReducer = (state: AuthPropsType = initialState, action: AuthAct
             return state
     }
 }
-export const setAuth = (id: number, email: string, login: string) => {
+export const setAuthAC = (id: number, email: string, login: string) => {
     return {
         type: "SET_AUTH",
         data: {id, email, login}
     } as const
+}
+type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
+type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
+export const setAuth = (): ThunkType => (dispatch: ThunkDispatchType) => {
+    AuthAPI.getAuth().then(data => {
+        dispatch(setAuthAC(data.data.id, data.data.email, data.data.login))
+    })
 }
