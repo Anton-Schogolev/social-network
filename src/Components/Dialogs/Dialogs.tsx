@@ -6,6 +6,8 @@ import {DialogsPropsType} from "../../types/entities";
 import NewMessage from "./NewMessage/NewMessage";
 import {StateType} from "../../redux/reduxStore";
 import {connect} from "react-redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 type MapStateToPropsType = { state: DialogsPropsType }
 
@@ -36,4 +38,7 @@ const Dialogs: React.FC<MapStateToPropsType> = ({state}) => {
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({state: state.dialogs})
 
-export default connect(mapStateToProps, {})(Dialogs)
+export default compose(
+    connect(mapStateToProps, {}),
+    withAuthRedirect
+)(Dialogs)

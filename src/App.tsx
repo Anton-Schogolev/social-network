@@ -20,7 +20,7 @@ function App() {
                 <Nav/>
                 <div className={"container"}>
                     <Route path={"/login"} render={() => <Login/>}/>
-                    <Route path={"/profile/:userid"} render={() => <ProfileContainer/>}/>
+                    <Route path={"/profile/:userid?"} render={() => <ProfileContainer/>}/>
                     <Route path={"/Dialogs"} render={() => <Dialogs/>}/>
                     <Route path={"/news"} render={() => <News/>}/>
                     <Route path={"/music"} render={() => <Music/>}/>
