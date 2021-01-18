@@ -1,26 +1,34 @@
 import React from "react";
 import {Profile} from "./Profile";
-import {connect} from "react-redux";
-import {setUserProfile} from "../../redux/profileReducer";
+import {connect, ConnectedProps} from "react-redux";
+import {putUserProfileStatus, setUserProfile, setUserProfileStatus} from "../../redux/profileReducer";
 import {StateType} from "../../redux/reduxStore";
-import {ProfileUserType} from "../../types/entities";
 import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {Preloader} from "../common/Preloader";
-import {compose} from "redux";
 
 
-type MapStateToPropsType = {
-    userProfile: ProfileUserType
-}
-type MapDispatchToPropsType = {
-    setUserProfile: (userId?: string) => void
-}
+// type MapStateToPropsType = {
+//     userProfile: ProfileUserType
+//     loggedUserId: number
+// }
+// type MapDispatchToPropsType = {
+//     setUserProfile: (userId?: string) => void
+//     setUserProfileStatus: (userId?: string) => void
+// }
 
 
-class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType & RouteComponentProps<{ userid?: string }>> {
+class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{ userid?: string }>> {
     componentDidMount() {
         const userId = this.props.match.params.userid
         this.props.setUserProfile(userId)
+        this.props.setUserProfileStatus(userId)
+    }
+    componentDidUpdate(prevProps: Readonly<PropsType & RouteComponentProps<{ userid?: string }>>) {
+        if(prevProps.match.params.userid!==this.props.match.params.userid){
+            const userId = this.props.match.params.userid
+            this.props.setUserProfile(userId)
+            this.props.setUserProfileStatus(userId)
+        }
     }
 
     render() {
@@ -30,19 +38,24 @@ class ProfileContainer extends React.Component<MapStateToPropsType & MapDispatch
         }
         if (this.props.userProfile.userId === Number(this.props.match.params.userid))
             return (
-                <Profile userProfile={this.props.userProfile}/>
+                <Profile
+                    userProfile={this.props.userProfile}
+                    userStatus={this.props.userStatus}
+                    isHisProfile={this.props.userProfile.userId === this.props.loggedUserId}
+                    putUserProfileStatus={this.props.putUserProfileStatus}
+                />
             )
         else
             return <Preloader/>
     }
 }
 
-const MapStateToProps = (state: StateType): MapStateToPropsType => ({
-    userProfile: {...state.posts.userProfile}
+const MapStateToProps = ({posts,auth}: StateType)/*: MapStateToPropsType*/ => ({
+    userProfile: {...posts.userProfile},
+    loggedUserId: auth.id,
+    userStatus: posts.userStatus
 })
+const connector = connect(MapStateToProps, {setUserProfile, setUserProfileStatus, putUserProfileStatus})
+type PropsType = ConnectedProps<typeof connector>
 
-export default compose(
-    connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(
-    MapStateToProps, {setUserProfile}),
-    withRouter
-    (ProfileContainer))
+export default connector(withRouter(ProfileContainer))

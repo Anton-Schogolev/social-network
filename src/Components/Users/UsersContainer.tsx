@@ -11,8 +11,9 @@ import {
 import {Users} from "./User/Users";
 import {Preloader} from "../common/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
-type MapStateToPropsType = UsersPropsType & {isAuth: boolean}
+type MapStateToPropsType = UsersPropsType & { isAuth: boolean }
 type MapDispatchToPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void
@@ -66,6 +67,6 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     ButtonsDisabled: state.users.ButtonsDisabled*/
 })
 
-export default connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(mapStateToProps, {
+export default compose<any>(connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(mapStateToProps, {
     follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching, getUsers
-})(withAuthRedirect(UsersContainer))
+}), withAuthRedirect)(UsersContainer)

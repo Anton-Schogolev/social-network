@@ -1,5 +1,5 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
-import {addPostAC, changeNewPostAC, setUserProfileAC} from "../redux/profileReducer";
+import {addPostAC, changeNewPostAC, setUserProfileAC, setUserProfileStatusAC} from "../redux/profileReducer";
 import {
     changePage,
     followAC,
@@ -42,6 +42,7 @@ export type ProfilePropsType = {
     postsArray: Array<PostType>
     newPost: string
     userProfile: ProfileUserType
+    userStatus: string
 }
 export type DialogsDataType = {
     id: number
@@ -98,6 +99,7 @@ export type DialogsActionsType = ReturnType<typeof addMessageAC>
 export type ProfileActionsType = ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostAC>
     | ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof setUserProfileStatusAC>
 export type UsersActionsType = ReturnType<typeof followAC>
     | ReturnType<typeof unfollowAC>
     | ReturnType<typeof setUsers>

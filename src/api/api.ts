@@ -34,6 +34,11 @@ type AuthGetType = {
     "messages":string[]
     "resultCode":number
 }
+type AuthPutType = {
+    data: {}
+    "messages":string[]
+    "resultCode":number
+}
 
 export const UsersAPI = {
     getUsers: (pageSize: number, page: number) => instance.get<GetUsersType>(
@@ -44,7 +49,9 @@ export const UsersAPI = {
 }
 
 export const ProfileAPI = {
-    getProfile: (userId?: string) => instance.get<ProfileUserType>(`profile/` + userId).then(response => response.data)
+    getProfile: (userId?: string) => instance.get<ProfileUserType>(`profile/` + userId).then(response => response.data),
+    getStatus: (userId?: string) => instance.get<string>(`profile/status/` + userId),
+    putStatus: (status: string) => instance.put<AuthPutType>(`profile/status/`, {status: status})
 }
 
 export const AuthAPI = {

@@ -9,3 +9,11 @@
 .login {
     float: right;
 }
+
+.active {
+    color: white;
+}
+
+.hyper {
+    text-decoration: none;
+}

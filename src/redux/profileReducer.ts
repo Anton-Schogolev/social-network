@@ -39,7 +39,8 @@ const initialState: ProfilePropsType = {
             small: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
             large: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg"
         }
-    }
+    },
+    userStatus: ""
 }
 
 export const profileReducer = (state: ProfilePropsType = initialState, action: ProfileActionsType) => {
@@ -68,6 +69,9 @@ export const profileReducer = (state: ProfilePropsType = initialState, action: P
                 }
             else return state
         }
+        case "SET_USER_PROFILE_STATUS": {
+            return {...state, userStatus: action.status}
+        }
         default:
             return state
     }
@@ -90,6 +94,12 @@ export const setUserProfileAC = (user: ProfileUserType) => {
         user: user
     } as const
 }
+export const setUserProfileStatusAC = (status: string) => {
+    return {
+        type: "SET_USER_PROFILE_STATUS",
+        status
+    } as const
+}
 
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
 type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
@@ -104,5 +114,19 @@ export const setUserProfile = (userId?: string): ThunkType => (dispatch: ThunkDi
                     }
                 })
             )
+        })
+}
+export const setUserProfileStatus = (userId?: string): ThunkType => (dispatch: ThunkDispatchType) => {
+    ProfileAPI.getStatus(userId)
+        .then(response => {
+            dispatch(setUserProfileStatusAC(response.data)
+            )
+        })
+}
+export const putUserProfileStatus = (status: string): ThunkType => (dispatch: ThunkDispatchType) => {
+    ProfileAPI.putStatus(status)
+        .then(response => {
+            if(response.data.resultCode === 0)
+            dispatch(setUserProfileStatusAC(status))
         })
 }

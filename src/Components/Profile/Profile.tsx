@@ -1,9 +1,14 @@
 import React from "react";
-import {User} from "./User/User";
+import {UserProfile} from "./UserProfile/UserProfile";
 import MyPosts from "./MyPosts/MyPosts";
 import {ProfileUserType} from "../../types/entities";
 
-type PropsType = { userProfile: ProfileUserType}
+type PropsType = {
+    userProfile: ProfileUserType,
+    userStatus: string,
+    isHisProfile: boolean
+    putUserProfileStatus: (status:string) => void
+}
 
 export function Profile(props: PropsType) {
     return (
@@ -11,7 +16,12 @@ export function Profile(props: PropsType) {
             <div>
                 <img width={"100%"} src={"http://www.cashadvance6online.com/data/archive/img/751556980.png"} alt={""}/>
             </div>
-            <User userProfile={props.userProfile}/>
+            <UserProfile
+                userProfile={props.userProfile}
+                status={props.userStatus}
+                isHisProfile={props.isHisProfile}
+                changeStatus={props.putUserProfileStatus}
+            />
             <MyPosts/>
         </div>
     )

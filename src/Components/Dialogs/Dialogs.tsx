@@ -38,7 +38,7 @@ const Dialogs: React.FC<MapStateToPropsType> = ({state}) => {
 
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({state: state.dialogs})
 
-export default compose(
+export default compose<any>(
     connect(mapStateToProps, {}),
     withAuthRedirect
 )(Dialogs)
