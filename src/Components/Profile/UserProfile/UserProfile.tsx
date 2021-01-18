@@ -1,5 +1,5 @@
 import s from "./UserProfile.module.css";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ProfileUserType} from "../../../types/entities";
 
 type PropsType = {
@@ -11,8 +11,8 @@ type PropsType = {
 
 export function UserProfile({userProfile, isHisProfile, ...restProps}: PropsType) {
     const [editMode, setEditMode] = useState<boolean>(false)
-    const [status, setStatus] = useState<string>(restProps.status)
-
+    const [status, setStatus] = useState<string>(()=>restProps.status)
+    useEffect(()=>{setStatus(restProps.status)},[restProps.status])
     const onBlurZhdun = () => {
         setEditMode(false)
         restProps.changeStatus(status)

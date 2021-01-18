@@ -26,14 +26,9 @@ type MapDispatchToPropsType = {
 
 
 class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchToPropsType> {
-    numberOfPages = 1
 
     componentDidMount() {
         this.changePage(1)
-    }
-
-    componentDidUpdate() {
-        this.numberOfPages = Math.ceil(this.props.totalNumber / this.props.pageSize)
     }
 
     changePage = (page: number) => {
@@ -46,7 +41,7 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
         else
             return <Users
                 users={this.props.users}
-                numberOfPages={this.numberOfPages}
+                numberOfPages={this.props.numberOfPages}
                 currentPage={this.props.currentPage}
                 changePage={this.changePage}
                 follow={this.props.follow}

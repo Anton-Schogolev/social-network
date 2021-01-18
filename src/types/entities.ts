@@ -1,14 +1,6 @@
 import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
 import {addPostAC, changeNewPostAC, setUserProfileAC, setUserProfileStatusAC} from "../redux/profileReducer";
-import {
-    changePage,
-    followAC,
-    setIsFetching,
-    setTotalNumber,
-    setUsers,
-    toggleButtonDisabled,
-    unfollowAC
-} from "../redux/usersReducer";
+import {UsersActionsType} from "../redux/usersReducer";
 import {setAuthAC} from "../redux/authReducer";
 
 export type PostType = {
@@ -81,6 +73,7 @@ export type UsersPropsType = {
     currentPage: number
     pageSize: number
     totalNumber: number
+    numberOfPages: number
     isFetching: boolean
     buttonsDisabled: number[]
 }
@@ -89,6 +82,11 @@ export type AuthPropsType = {
     email: null | string
     login: string
     isAuth: boolean
+}
+export type AuthLoginType = {
+    email: string
+    password: string
+    rememberMe: boolean
 }
 export type ActionsTypes = DialogsActionsType
     | ProfileActionsType
@@ -100,11 +98,4 @@ export type ProfileActionsType = ReturnType<typeof addPostAC>
     | ReturnType<typeof changeNewPostAC>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setUserProfileStatusAC>
-export type UsersActionsType = ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowAC>
-    | ReturnType<typeof setUsers>
-    | ReturnType<typeof changePage>
-    | ReturnType<typeof setTotalNumber>
-    | ReturnType<typeof setIsFetching>
-    | ReturnType<typeof toggleButtonDisabled>
 export type AuthActionsType = ReturnType<typeof setAuthAC>

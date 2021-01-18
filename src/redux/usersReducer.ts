@@ -1,4 +1,4 @@
-import {ActionsTypes, UsersActionsType, UsersPropsType, UserType} from "../types/entities";
+import {ActionsTypes, UsersPropsType, UserType} from "../types/entities";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {StateType} from "./reduxStore";
 import {UsersAPI} from "../api/api";
@@ -23,9 +23,19 @@ const initialState: UsersPropsType = {
     pageSize: 10,
     currentPage: 1,
     totalNumber: 1,
+    numberOfPages: 1,
     isFetching: false,
     buttonsDisabled: []
 }
+
+export type UsersActionsType = ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowAC>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof changePage>
+    | ReturnType<typeof setTotalNumber>
+    | ReturnType<typeof setNumberOfPages>
+    | ReturnType<typeof setIsFetching>
+    | ReturnType<typeof toggleButtonDisabled>
 
 export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType): UsersPropsType => {
     switch (action.type) {
@@ -43,6 +53,9 @@ export const usersReducer = (state: UsersPropsType = initialState, action: Users
         }
         case "SET_TOTAL_NUMBER": {
             return {...state, totalNumber: action.totalNumber}
+        }
+        case "SET_NUMBER_OF_PAGES": {
+            return {...state, numberOfPages: action.numberOfPages}
         }
         case "SET_IS_FETCHING": {
             return {...state, isFetching: action.isFetching}
@@ -90,6 +103,12 @@ export const setTotalNumber = (totalNumber: number) => {
         totalNumber: totalNumber
     } as const
 }
+export const setNumberOfPages = (numberOfPages: number) => {
+    return {
+        type: "SET_NUMBER_OF_PAGES",
+        numberOfPages
+    } as const
+}
 export const setIsFetching = (isFetching: boolean) => {
     return {
         type: "SET_IS_FETCHING",
@@ -111,6 +130,7 @@ export const getUsers = (page: number, pageSize: number): ThunkType => (dispatch
     UsersAPI.getUsers(pageSize, page).then(data => {
         dispatch(setIsFetching(false))
         dispatch(setTotalNumber(data.totalCount))
+        dispatch(setNumberOfPages(Math.ceil(data.totalCount / pageSize)))
         dispatch(setUsers(data.items.map(it => ({
             id: it.id,
             name: it.name,

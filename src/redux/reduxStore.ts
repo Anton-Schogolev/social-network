@@ -5,13 +5,15 @@ import {navReducer} from "./navReducer";
 import {usersReducer} from "./usersReducer";
 import {authReducer} from "./authReducer";
 import thunk from "redux-thunk";
+import {reducer as formReducer} from "redux-form";
 
 const reducers = combineReducers({
     dialogs: dialogsReducer,
     posts: profileReducer,
     nav: navReducer,
     users: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 
 export type StateType = ReturnType<typeof reducers>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ProfileUserType} from "../types/entities";
+import {AuthLoginType, ProfileUserType} from "../types/entities";
 
 const instance = axios.create({
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
@@ -34,11 +34,12 @@ type AuthGetType = {
     "messages":string[]
     "resultCode":number
 }
-type AuthPutType = {
+type SimplestResponseType = {
     data: {}
     "messages":string[]
     "resultCode":number
 }
+
 
 export const UsersAPI = {
     getUsers: (pageSize: number, page: number) => instance.get<GetUsersType>(
@@ -51,9 +52,11 @@ export const UsersAPI = {
 export const ProfileAPI = {
     getProfile: (userId?: string) => instance.get<ProfileUserType>(`profile/` + userId).then(response => response.data),
     getStatus: (userId?: string) => instance.get<string>(`profile/status/` + userId),
-    putStatus: (status: string) => instance.put<AuthPutType>(`profile/status/`, {status: status})
+    putStatus: (status: string) => instance.put<SimplestResponseType>(`profile/status/`, {status: status})
 }
 
 export const AuthAPI = {
-    getAuth: () => instance.get<AuthGetType>(`auth/me`).then(response => response.data)
+    getAuth: () => instance.get<AuthGetType>(`auth/me`).then(response => response.data),
+    login: (loginData: AuthLoginType) => instance
+        .post<SimplestResponseType>(`auth/login`, loginData)//.then(response => response.data)
 }
