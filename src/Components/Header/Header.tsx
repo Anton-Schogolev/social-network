@@ -7,6 +7,7 @@ type PropsType = {
     email: null | string
     login: string
     isAuth: boolean
+    logout: () => void
 }
 
 export function Header(props: PropsType) {
@@ -17,7 +18,9 @@ export function Header(props: PropsType) {
                 props.isAuth ? <span className={s.login}>
                         <NavLink to={`/profile/${props.id}`} className={s.hyper} activeClassName={s.active}>
                             {props.login}
-                        </NavLink>
+                        </NavLink> <button onClick={props.logout}>logout</button>{/*<NavLink onClick={props.logout} to={`/login`} className={s.hyper} activeClassName={s.active}>
+                            logout
+                        </NavLink>*/}
                 </span>
                     : <span className={s.login}>login</span>
             }

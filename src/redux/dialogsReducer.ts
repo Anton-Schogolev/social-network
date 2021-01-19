@@ -14,8 +14,7 @@ const initialState: DialogsPropsType = {
         {id: 2, message: "How are you?", userId: 5},
         {id: 3, message: "How is your typeScript?", userId: 5},
         {id: 3, message: "Hi! It's good", userId: 3}
-    ],
-    newMessage: ""
+    ]
 }
 
 export const dialogsReducer = (state: DialogsPropsType = initialState, action: DialogsActionsType) => {
@@ -23,27 +22,19 @@ export const dialogsReducer = (state: DialogsPropsType = initialState, action: D
         case "ADD-MESSAGE": {
             const newMessage = {
                 id: state.messageProps.length,
-                message: state.newMessage,
+                message: action.text,
                 userId: 5
             }
             state.messageProps = [...state.messageProps, newMessage]
-            return state
-        }
-        case "CHANGE-NEW-MESSAGE": {
-            return {...state, newMessage: action.text}
+            return {...state}
         }
         default:
             return state
     }
 }
-export const addMessageAC = () => {
+export const addMessageAC = (text: string) => {
     return {
-        type: "ADD-MESSAGE"
-    } as const
-}
-export const changeNewMessageAC = (text: string) => {
-    return {
-        type: "CHANGE-NEW-MESSAGE",
+        type: "ADD-MESSAGE",
         text: text
     } as const
 }

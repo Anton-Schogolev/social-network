@@ -1,5 +1,5 @@
-import {addMessageAC, changeNewMessageAC} from "../redux/dialogsReducer";
-import {addPostAC, changeNewPostAC, setUserProfileAC, setUserProfileStatusAC} from "../redux/profileReducer";
+import {addMessageAC} from "../redux/dialogsReducer";
+import {addPostAC, setUserProfileAC, setUserProfileStatusAC} from "../redux/profileReducer";
 import {UsersActionsType} from "../redux/usersReducer";
 import {setAuthAC} from "../redux/authReducer";
 
@@ -32,7 +32,6 @@ export type ProfileUserType = {
 }
 export type ProfilePropsType = {
     postsArray: Array<PostType>
-    newPost: string
     userProfile: ProfileUserType
     userStatus: string
 }
@@ -48,7 +47,6 @@ export type MessageDataType = {
 export type DialogsPropsType = {
     dialogsProps: Array<DialogsDataType>
     messageProps: Array<MessageDataType>
-    newMessage: string
 }
 export type NavType = {
     friends: Array<DialogsDataType>
@@ -93,9 +91,7 @@ export type ActionsTypes = DialogsActionsType
     | UsersActionsType
     | AuthActionsType
 export type DialogsActionsType = ReturnType<typeof addMessageAC>
-    | ReturnType<typeof changeNewMessageAC>
 export type ProfileActionsType = ReturnType<typeof addPostAC>
-    | ReturnType<typeof changeNewPostAC>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setUserProfileStatusAC>
 export type AuthActionsType = ReturnType<typeof setAuthAC>

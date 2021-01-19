@@ -5,13 +5,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/authReducer";
 import {StateType} from "../../redux/reduxStore";
 import {Redirect} from "react-router-dom";
+import {required} from "../../utils/validators";
+import {FormsInput} from "../common/FormsControls";
+import s from "./Login.module.css";
 
 
-function LoginForm(props: InjectedFormProps<AuthLoginType> /*{ handleSubmit: () => void }*/) {
-    return <form onSubmit={props.handleSubmit}>
-        <Field placeholder={"email"} name={"email"} component={"input"}/>
-        <Field placeholder={"password"} name={"password"} component={"input"} type={"password"}/>
-        <Field name={"rememberMe"} type={"checkbox"} component={"input"}/>remember me
+function LoginForm(props: InjectedFormProps<AuthLoginType>) {
+    return <form onSubmit={props.handleSubmit} className={s.form}>
+        <Field
+            placeholder={"email"} name={"email"}
+            validate={[required]} component={FormsInput}/>
+        <Field
+            placeholder={"password"} name={"password"}
+            validate={[required]} component={FormsInput} type={"password"}/>
+        <label><Field name={"rememberMe"} type={"checkbox"} component={"input"}/>remember me</label>
         <button>login</button>
     </form>;
 }

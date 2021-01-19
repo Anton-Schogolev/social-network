@@ -1,41 +1,42 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import s from "./NewPost.module.css"
-import {addPostAC, changeNewPostAC} from "../../../../redux/profileReducer";
+import {addPostAC} from "../../../../redux/profileReducer";
 import {ActionsTypes} from "../../../../types/entities";
 import {connect} from "react-redux";
-import {StateType} from "../../../../redux/reduxStore";
+import {Field, reduxForm} from "redux-form";
 
-type MapStateToPropsType = { value: string }
 type MapDispatchToPropsType = {
-    changeNewPost: (text: string) => void
-    addPost: () => void
+    addPost: (text: string) => void
 }
 
-function NewPost({value, addPost, changeNewPost}: MapStateToPropsType & MapDispatchToPropsType) {
-    const onTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        changeNewPost(e.currentTarget.value)
-    }
-    const onAddPostClick = () => {
-        addPost()
-        changeNewPost("")
+const NewPostTextarea = reduxForm<{newPost: string}>({form: 'newPost'})((props) => {
+    return <form onSubmit={(e)=>{props.handleSubmit(e); props.reset()}}>
+        <div>
+            <Field name={"newPost"}
+                   placeholder={"Enter new post"}
+                   component={"textarea"} rows={5} className={s.text}/>
+        </div>
+        <div>
+            <button>Add post</button>
+        </div>
+    </form>;
+})
+
+function NewPost({addPost}: MapDispatchToPropsType) {
+    const onSubmit = ({newPost}: {newPost: string}) => {
+        addPost(newPost)
     }
     return (
         <div>
-            <div>
-                <textarea value={value} onChange={onTextareaChange} rows={5} className={s.text}/>
-            </div>
-            <div>
-                <button onClick={onAddPostClick}>Add post</button>
-            </div>
+            <NewPostTextarea onSubmit={onSubmit}/>
         </div>
     )
 }
 
 
-const mapStateToProps = (state: StateType): MapStateToPropsType => ({value: state.posts.newPost})
+const mapStateToProps = () => ({})
 const mapDispatchToProps = (dispatch: (action: ActionsTypes) => void): MapDispatchToPropsType => ({
-    changeNewPost: (text: string) => dispatch(changeNewPostAC(text)),
-    addPost: () => dispatch(addPostAC())
+    addPost: (text: string) => dispatch(addPostAC(text))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewPost)

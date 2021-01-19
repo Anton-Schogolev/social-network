@@ -18,7 +18,6 @@ const initialState: ProfilePropsType = {
             amountOfLikes: 14
         }
     ],
-    newPost: "",
     userProfile: {
         aboutMe: "",
         contacts: {
@@ -48,14 +47,11 @@ export const profileReducer = (state: ProfilePropsType = initialState, action: P
         case "ADD-POST": {
             const newPost = {
                 id: state.postsArray.length,
-                text: state.newPost,
+                text: action.text,
                 ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
                 amountOfLikes: 0
             }
             return {...state, postsArray: [newPost, ...state.postsArray]}
-        }
-        case "CHANGE-NEW-POST": {
-            return {...state, newPost: action.text}
         }
         case "SET_USER_PROFILE": {
             if (action.user)
@@ -77,17 +73,18 @@ export const profileReducer = (state: ProfilePropsType = initialState, action: P
     }
 }
 
-export const addPostAC = () => {
+export const addPostAC = (text: string) => {
     return {
         type: "ADD-POST",
-    } as const
-}
-export const changeNewPostAC = (text: string) => {
-    return {
-        type: "CHANGE-NEW-POST",
         text: text
     } as const
 }
+// export const changeNewPostAC = (text: string) => {
+//     return {
+//         type: "CHANGE-NEW-POST",
+//         text: text
+//     } as const
+// }
 export const setUserProfileAC = (user: ProfileUserType) => {
     return {
         type: "SET_USER_PROFILE",
