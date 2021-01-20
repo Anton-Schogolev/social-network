@@ -2,6 +2,7 @@ import {ActionsTypes, AuthActionsType, AuthLoginType, AuthPropsType} from "../ty
 import {AuthAPI} from "../api/api";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {StateType} from "./reduxStore"
+import {FormAction, stopSubmit} from "redux-form";
 
 const initialState: AuthPropsType = {
     id: -1,
@@ -25,8 +26,8 @@ export const setAuthAC = (id: number, email: string, login: string, isAuth: bool
         payload: {id, email, login, isAuth}
     } as const
 }
-type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
-type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
+type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes | FormAction>;
+type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes | FormAction>;
 export const setAuth = (): ThunkType => (dispatch: ThunkDispatchType) => {
     AuthAPI.getAuth().then(data => {
         if (data.resultCode === 0)
@@ -39,6 +40,8 @@ export const login = (loginData: AuthLoginType): ThunkType => (dispatch: ThunkDi
     AuthAPI.login(loginData).then(response => {
         if(response.data.resultCode === 0)
             dispatch(setAuth())
+        else
+            dispatch(stopSubmit("login", {_error: response.data.messages[0]}))
     })
 }
 export const logout = (): ThunkType => (dispatch: ThunkDispatchType) => {

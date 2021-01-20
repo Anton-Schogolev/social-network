@@ -7,14 +7,6 @@ import {Redirect, RouteComponentProps, withRouter} from "react-router-dom";
 import {Preloader} from "../common/Preloader";
 
 
-// type MapStateToPropsType = {
-//     userProfile: ProfileUserType
-//     loggedUserId: number
-// }
-// type MapDispatchToPropsType = {
-//     setUserProfile: (userId?: string) => void
-//     setUserProfileStatus: (userId?: string) => void
-// }
 
 
 class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{ userid?: string }>> {
@@ -32,8 +24,12 @@ class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{
     }
 
     render() {
-        if(!this.props.match.params.userid){
-            this.props.setUserProfile("2")
+        if(!this.props.match.params.userid && this.props.isAuth){
+            //this.props.setUserProfile(String(this.props.loggedUserId))
+            return <Redirect to={"/profile/" + this.props.loggedUserId}/>
+        }
+        else if(!this.props.match.params.userid){
+            //this.props.setUserProfile("2")
             return <Redirect to={"/profile/2"}/>
         }
         if (this.props.userProfile.userId === Number(this.props.match.params.userid))
@@ -53,6 +49,7 @@ class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{
 const MapStateToProps = ({posts,auth}: StateType)/*: MapStateToPropsType*/ => ({
     userProfile: {...posts.userProfile},
     loggedUserId: auth.id,
+    isAuth: auth.isAuth,
     userStatus: posts.userStatus
 })
 const connector = connect(MapStateToProps, {setUserProfile, setUserProfileStatus, putUserProfileStatus})

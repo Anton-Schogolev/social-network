@@ -12,6 +12,7 @@ import s from "./Login.module.css";
 
 function LoginForm(props: InjectedFormProps<AuthLoginType>) {
     return <form onSubmit={props.handleSubmit} className={s.form}>
+        {props.error && <div className={s.error}>{props.error}</div>}
         <Field
             placeholder={"email"} name={"email"}
             validate={[required]} component={FormsInput}/>

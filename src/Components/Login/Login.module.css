@@ -3,3 +3,6 @@
     flex-direction: column;
     width: 250px;
 }
+.error {
+    background: #f85d5d;
+}
