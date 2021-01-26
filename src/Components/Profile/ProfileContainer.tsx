@@ -30,7 +30,7 @@ class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{
         }
         else if(!this.props.match.params.userid){
             //this.props.setUserProfile("2")
-            return <Redirect to={"/profile/2"}/>
+            return <Redirect to={"/login"}/>
         }
         if (this.props.userProfile.userId === Number(this.props.match.params.userid))
             return (

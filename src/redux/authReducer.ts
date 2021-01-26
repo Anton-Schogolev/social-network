@@ -28,8 +28,8 @@ export const setAuthAC = (id: number, email: string, login: string, isAuth: bool
 }
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes | FormAction>;
 type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes | FormAction>;
-export const setAuth = (): ThunkType => (dispatch: ThunkDispatchType) => {
-    AuthAPI.getAuth().then(data => {
+export const setAuth = (): ThunkAction<Promise<void>, StateType, unknown, ActionsTypes | FormAction> => (dispatch) => {
+    return AuthAPI.getAuth().then(data => {
         if (data.resultCode === 0)
             dispatch(setAuthAC(data.data.id, data.data.email, data.data.login, true))
         else

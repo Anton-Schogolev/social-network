@@ -22,7 +22,7 @@ export function Header(props: PropsType) {
                             logout
                         </NavLink>*/}
                 </span>
-                    : <span className={s.login}>login</span>
+                    : <NavLink to={`/login`} className={s.hyper} activeClassName={s.active}>login</NavLink>
             }
         </header>
     )

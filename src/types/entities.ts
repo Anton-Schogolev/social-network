@@ -2,6 +2,7 @@ import {addMessageAC} from "../redux/dialogsReducer";
 import {addPostAC, setUserProfileAC, setUserProfileStatusAC} from "../redux/profileReducer";
 import {UsersActionsType} from "../redux/usersReducer";
 import {setAuthAC} from "../redux/authReducer";
+import {AppActionType} from "../redux/appReducer";
 
 export type PostType = {
     id: number
@@ -86,10 +87,14 @@ export type AuthLoginType = {
     password: string
     rememberMe: boolean
 }
+export type AppStateType = {
+    initialized: boolean
+}
 export type ActionsTypes = DialogsActionsType
     | ProfileActionsType
     | UsersActionsType
     | AuthActionsType
+    | AppActionType
 export type DialogsActionsType = ReturnType<typeof addMessageAC>
 export type ProfileActionsType = ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfileAC>
