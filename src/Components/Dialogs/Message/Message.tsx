@@ -8,7 +8,7 @@ type PropsType = {
     userID: number
 }
 
-export function Message(props: PropsType) {
+export const Message = React.memo((props: PropsType) => {
     const message = props.message.split('\n').map(
         (x, i, arr) => arr.length !== i + 1 ? <>{x}<br/></> : x
     )
@@ -22,4 +22,4 @@ export function Message(props: PropsType) {
             <div key={props.id} className={`${s.message} ${isU ? s.messageR : s.messageL}`}>{message}</div>
         </div>
     )
-}
+});

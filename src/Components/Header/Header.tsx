@@ -10,20 +10,19 @@ type PropsType = {
     logout: () => void
 }
 
-export function Header(props: PropsType) {
-    return (
-        <header className={s.header}>
-            <h5>Here has to be logo</h5>
-            {
-                props.isAuth ? <span className={s.login}>
+export const Header = React.memo((props: PropsType) => (
+    <header className={s.header}>
+        <h5>Here has to be logo</h5>
+        {
+            props.isAuth ? <span className={s.login}>
                         <NavLink to={`/profile/${props.id}`} className={s.hyper} activeClassName={s.active}>
                             {props.login}
-                        </NavLink> <button onClick={props.logout}>logout</button>{/*<NavLink onClick={props.logout} to={`/login`} className={s.hyper} activeClassName={s.active}>
+                        </NavLink> <button onClick={props.logout}>logout</button>
+                    {/*<NavLink onClick={props.logout} to={`/login`} className={s.hyper} activeClassName={s.active}>
                             logout
                         </NavLink>*/}
                 </span>
-                    : <NavLink to={`/login`} className={s.hyper} activeClassName={s.active}>login</NavLink>
-            }
-        </header>
-    )
-}
+                : <NavLink to={`/login`} className={s.hyper} activeClassName={s.active}>login</NavLink>
+        }
+    </header>
+));

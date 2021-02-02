@@ -10,19 +10,17 @@ type PropsType = {
     putUserProfileStatus: (status:string) => void
 }
 
-export function Profile(props: PropsType) {
-    return (
+export const Profile = (props: PropsType) => (
+    <div>
         <div>
-            <div>
-                <img width={"100%"} src={"http://www.cashadvance6online.com/data/archive/img/751556980.png"} alt={""}/>
-            </div>
-            <UserProfile
-                userProfile={props.userProfile}
-                status={props.userStatus}
-                isHisProfile={props.isHisProfile}
-                changeStatus={props.putUserProfileStatus}
-            />
-            <MyPosts/>
+            <img width={"100%"} src={"http://www.cashadvance6online.com/data/archive/img/751556980.png"} alt={""}/>
         </div>
-    )
-}
+        <UserProfile
+            userProfile={props.userProfile}
+            status={props.userStatus}
+            isHisProfile={props.isHisProfile}
+            changeStatus={props.putUserProfileStatus}
+        />
+        <MyPosts/>
+    </div>
+);
