@@ -1,18 +1,19 @@
-import {ActionsTypes, ProfileActionsType, ProfilePropsType, ProfileUserType} from "../types/entities";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {ActionsTypes, ProfilePropsType, ProfileUserType} from "../types/entities";
+import {ThunkAction} from "redux-thunk";
 import {StateType} from "./reduxStore";
 import {ProfileAPI} from "../api/api";
+import {v1} from "uuid";
 
 const initialState: ProfilePropsType = {
     postsArray: [
         {
-            id: 0,
+            id: v1(),
             ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
             text: "Hey! How are you?",
             amountOfLikes: 26
         },
         {
-            id: 1,
+            id: v1(),
             ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
             text: "It's my first post.",
             amountOfLikes: 14
@@ -42,16 +43,24 @@ const initialState: ProfilePropsType = {
     userStatus: ""
 }
 
+export type ProfileActionsType = ReturnType<typeof addPostAC>
+    | ReturnType<typeof deletePostAC>
+    | ReturnType<typeof setUserProfileAC>
+    | ReturnType<typeof setUserProfileStatusAC>
+
 export const profileReducer = (state: ProfilePropsType = initialState, action: ProfileActionsType) => {
     switch (action.type) {
         case "ADD-POST": {
             const newPost = {
-                id: state.postsArray.length,
+                id: v1(),
                 text: action.text,
                 ava: "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
                 amountOfLikes: 0
             }
             return {...state, postsArray: [newPost, ...state.postsArray]}
+        }
+        case "DELETE-POST": {
+            return {...state, postsArray: state.postsArray.filter(post => post.id !== action.id)}
         }
         case "SET_USER_PROFILE": {
             if (action.user)
@@ -79,6 +88,12 @@ export const addPostAC = (text: string) => {
         text: text
     } as const
 }
+export const deletePostAC = (id: string) => {
+    return {
+        type: "DELETE-POST",
+        id
+    } as const
+}
 // export const changeNewPostAC = (text: string) => {
 //     return {
 //         type: "CHANGE-NEW-POST",
@@ -88,7 +103,7 @@ export const addPostAC = (text: string) => {
 export const setUserProfileAC = (user: ProfileUserType) => {
     return {
         type: "SET_USER_PROFILE",
-        user: user
+        user
     } as const
 }
 export const setUserProfileStatusAC = (status: string) => {
@@ -99,8 +114,8 @@ export const setUserProfileStatusAC = (status: string) => {
 }
 
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
-type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
-export const setUserProfile = (userId?: string): ThunkType => (dispatch: ThunkDispatchType) => {
+// type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
+export const setUserProfile = (userId?: string): ThunkType => (dispatch) => {
     ProfileAPI.getProfile(userId)
         .then(data => {
             dispatch(setUserProfileAC({
@@ -113,14 +128,14 @@ export const setUserProfile = (userId?: string): ThunkType => (dispatch: ThunkDi
             )
         })
 }
-export const setUserProfileStatus = (userId?: string): ThunkType => (dispatch: ThunkDispatchType) => {
+export const setUserProfileStatus = (userId?: string): ThunkType => (dispatch) => {
     ProfileAPI.getStatus(userId)
         .then(response => {
             dispatch(setUserProfileStatusAC(response.data)
             )
         })
 }
-export const putUserProfileStatus = (status: string): ThunkType => (dispatch: ThunkDispatchType) => {
+export const putUserProfileStatus = (status: string): ThunkType => (dispatch) => {
     ProfileAPI.putStatus(status)
         .then(response => {
             if(response.data.resultCode === 0)

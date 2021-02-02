@@ -18,10 +18,16 @@
 
 .postText {
     background: lightgrey;
+    position: relative;
 }
 
 .preText {
     padding: 10px;
     font-size: 16px;
     font-family: Lucida Sans, serif;
+}
+.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
 }

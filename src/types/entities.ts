@@ -1,11 +1,11 @@
 import {addMessageAC} from "../redux/dialogsReducer";
-import {addPostAC, setUserProfileAC, setUserProfileStatusAC} from "../redux/profileReducer";
+import {ProfileActionsType} from "../redux/profileReducer";
 import {UsersActionsType} from "../redux/usersReducer";
 import {setAuthAC} from "../redux/authReducer";
 import {AppActionType} from "../redux/appReducer";
 
 export type PostType = {
-    id: number
+    id: string
     text: string
     ava: string
     amountOfLikes: number
@@ -96,7 +96,4 @@ export type ActionsTypes = DialogsActionsType
     | AuthActionsType
     | AppActionType
 export type DialogsActionsType = ReturnType<typeof addMessageAC>
-export type ProfileActionsType = ReturnType<typeof addPostAC>
-    | ReturnType<typeof setUserProfileAC>
-    | ReturnType<typeof setUserProfileStatusAC>
 export type AuthActionsType = ReturnType<typeof setAuthAC>
