@@ -1,5 +1,5 @@
 import {ActionsTypes, AppStateType} from "../types/entities";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {ThunkAction} from "redux-thunk";
 import {StateType} from "./reduxStore"
 import {FormAction} from "redux-form";
 import {setAuth} from "./authReducer";
@@ -24,8 +24,9 @@ export const setInitializedSuccess = () => {
     } as const
 }
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes | FormAction>;
-type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes | FormAction>;
-export const initialize = (): ThunkType => (dispatch: ThunkDispatchType) => {
-    const promise = dispatch(setAuth())
-    promise.then(()=>dispatch(setInitializedSuccess()))
+// type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes | FormAction>;
+
+export const initialize = (): ThunkType => (dispatch) => {
+    dispatch(setAuth())
+        .then(()=>dispatch(setInitializedSuccess()))
 }

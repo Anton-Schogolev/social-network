@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {addMessageAC} from "../../../redux/dialogsReducer";
 import {ActionsTypes} from "../../../types/entities";
 import {reduxForm, Field} from "redux-form";
+import {Dispatch} from "redux";
 
 type MapDispatchToPropsType = {
     addMessage: (text: string) => void
@@ -39,7 +40,7 @@ const NewMessage: React.FC<MapDispatchToPropsType> = ({addMessage}) => {
     )
 }
 
-const mapDispatchToProps = (dispatch: (action: ActionsTypes) => void) => ({
+const mapDispatchToProps = (dispatch: Dispatch<ActionsTypes>) => ({
     addMessage: (text: string) => dispatch(addMessageAC(text))
 })
 

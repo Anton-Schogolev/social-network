@@ -54,14 +54,9 @@ class UsersContainer extends React.Component<MapStateToPropsType & MapDispatchTo
 const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     ...state.users,
     isAuth: state.auth.isAuth
-    /*users: state.users.users,
-    totalNumber: state.users.totalNumber,
-    currentPage: state.users.currentPage,
-    pageSize: state.users.pageSize,
-    isFetching: state.users.isFetching,
-    ButtonsDisabled: state.users.ButtonsDisabled*/
 })
 
-export default compose<any>(connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(mapStateToProps, {
-    follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching, getUsers
-}), withAuthRedirect)(UsersContainer)
+export default compose<any>(
+    connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(mapStateToProps, {
+    follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching, getUsers}),
+    withAuthRedirect)(UsersContainer)

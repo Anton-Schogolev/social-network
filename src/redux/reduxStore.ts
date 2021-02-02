@@ -22,3 +22,4 @@ export type StateType = ReturnType<typeof reducers>
 
 export const store = createStore(reducers, applyMiddleware(thunk))
 //export type StoreType = typeof store
+
