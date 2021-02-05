@@ -20,7 +20,7 @@ const Dialogs: React.FC<MapStateToPropsType> = ({state}) => {
         if (name !== undefined)
             return (
                 <Message key={x.id} id={x.id} name={name.name} message={x.message} userID={x.userId}/>)
-        else return undefined
+        else return {}
     })
     return (
         <div className={s.dialogs}>

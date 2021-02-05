@@ -44,4 +44,4 @@ const mapDispatchToProps = (dispatch: Dispatch<ActionsTypes>) => ({
     addMessage: (text: string) => dispatch(addMessageAC(text))
 })
 
-export default connect(()=>{}, mapDispatchToProps)(NewMessage)
+export default connect(null, mapDispatchToProps)(NewMessage)

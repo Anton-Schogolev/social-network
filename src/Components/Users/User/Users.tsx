@@ -27,8 +27,8 @@ export const Users = (props: PropsType) => {
         }}>{value} </span>
 
     const pages = <div>
-        <Span value={1}/> {numbersOfPages[0] !== 2 ? "... " : ""}{numbersOfPages.map(value =>
-        <Span value={value} />)}
+        <Span value={1}/> {numbersOfPages[0] !== 2 ? "... " : ""}{numbersOfPages.map((value, i) =>
+        <Span key={i} value={value} />)}
         {numbersOfPages[numbersOfPages.length - 1] !== props.numberOfPages - 1 ? " ... " : ""}
         <Span value={props.numberOfPages}/>
     </div>;

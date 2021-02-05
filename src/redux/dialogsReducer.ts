@@ -13,7 +13,7 @@ const initialState: DialogsPropsType = {
         {id: 1, message: "Hi!", userId: 5},
         {id: 2, message: "How are you?", userId: 5},
         {id: 3, message: "How is your typeScript?", userId: 5},
-        {id: 3, message: "Hi! It's good", userId: 3}
+        {id: 4, message: "Hi! It's good", userId: 3}
     ]
 }
 

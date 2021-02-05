@@ -25,11 +25,9 @@ class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{
 
     render() {
         if(!this.props.match.params.userid && this.props.isAuth){
-            //this.props.setUserProfile(String(this.props.loggedUserId))
             return <Redirect to={"/profile/" + this.props.loggedUserId}/>
         }
         else if(!this.props.match.params.userid){
-            //this.props.setUserProfile("2")
             return <Redirect to={"/login"}/>
         }
         if (this.props.userProfile.userId === Number(this.props.match.params.userid))
@@ -46,7 +44,7 @@ class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{
     }
 }
 
-const MapStateToProps = ({posts,auth}: StateType)/*: MapStateToPropsType*/ => ({
+const MapStateToProps = ({posts,auth}: StateType) => ({
     userProfile: {...posts.userProfile},
     loggedUserId: auth.id,
     isAuth: auth.isAuth,
@@ -56,12 +54,13 @@ const connector = connect(MapStateToProps, {setUserProfile, setUserProfileStatus
 type PropsType = ConnectedProps<typeof connector>
 
 export default connector(withRouter(ProfileContainer))
+
 /*
 //@ts-ignore
 const connect = (mstp, mdtp) => {
     //@ts-ignore
     return (Component) => {
-        return<Context.consumer>
+        return <Context.consumer>
             <Component {...mstp(store.getState())} {...mdtp(store.dispatch)}/>
         </Context.consumer>
     }
