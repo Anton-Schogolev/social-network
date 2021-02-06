@@ -115,7 +115,7 @@ export const setUserProfileStatusAC = (status: string) => {
 
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
 // type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
-export const setUserProfile = (userId?: string): ThunkType => (dispatch) => {
+export const setUserProfile = (userId: string): ThunkType => (dispatch) => {
     ProfileAPI.getProfile(userId)
         .then(data => {
             dispatch(setUserProfileAC({
@@ -128,7 +128,7 @@ export const setUserProfile = (userId?: string): ThunkType => (dispatch) => {
             )
         })
 }
-export const setUserProfileStatus = (userId?: string): ThunkType => (dispatch) => {
+export const setUserProfileStatus = (userId: string): ThunkType => (dispatch) => {
     ProfileAPI.getStatus(userId)
         .then(response => {
             dispatch(setUserProfileStatusAC(response.data)

@@ -12,14 +12,18 @@ import {Preloader} from "../common/Preloader";
 class ProfileContainer extends React.Component<PropsType & RouteComponentProps<{ userid?: string }>> {
     componentDidMount() {
         const userId = this.props.match.params.userid
-        this.props.setUserProfile(userId)
-        this.props.setUserProfileStatus(userId)
+        if(userId) {
+            this.props.setUserProfile(userId)
+            this.props.setUserProfileStatus(userId)
+        }
     }
     componentDidUpdate(prevProps: Readonly<PropsType & RouteComponentProps<{ userid?: string }>>) {
         if(prevProps.match.params.userid!==this.props.match.params.userid){
             const userId = this.props.match.params.userid
-            this.props.setUserProfile(userId)
-            this.props.setUserProfileStatus(userId)
+            if(userId) {
+                this.props.setUserProfile(userId)
+                this.props.setUserProfileStatus(userId)
+            }
         }
     }
 

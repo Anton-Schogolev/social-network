@@ -50,8 +50,8 @@ export const UsersAPI = {
 }
 
 export const ProfileAPI = {
-    getProfile: (userId?: string) => instance.get<ProfileUserType>(`profile/` + userId).then(response => response.data),
-    getStatus: (userId?: string) => instance.get<string>(`profile/status/` + userId),
+    getProfile: (userId: string) => instance.get<ProfileUserType>(`profile/` + userId).then(response => response.data),
+    getStatus: (userId: string) => instance.get<string>(`profile/status/` + userId),
     putStatus: (status: string) => instance.put<SimplestResponseType>(`profile/status/`, {status: status})
 }
 
