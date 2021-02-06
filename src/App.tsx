@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 import Nav from "./Components/Nav/Nav";
 import Dialogs from "./Components/Dialogs/Dialogs";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, HashRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
@@ -25,7 +25,7 @@ function App() {
         return <Preloader/>
     }
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="App">
                 <HeaderContainer/>
                 <Nav/>
@@ -39,7 +39,7 @@ function App() {
                     <Route path={"/users"} render={() => <UsersContainer/>}/>
                 </div>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
