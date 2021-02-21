@@ -31,20 +31,20 @@ type AuthGetType = {
         "login": string
         "email": string
     }
-    "messages":string[]
-    "resultCode":number
+    "messages": string[]
+    "resultCode": number
 }
 type SimplestResponseType = {
     data: {}
-    "messages":string[]
-    "resultCode":number
+    "messages": string[]
+    "resultCode": number
 }
 
 
 export const UsersAPI = {
     getUsers: (pageSize: number, page: number) => instance.get<GetUsersType>(
-            `users?count=${pageSize}&page=${page}`
-        ).then(response => response.data),
+        `users?count=${pageSize}&page=${page}`
+    ).then(response => response.data),
     follow: (id: number) => instance.post(`follow/${id}`),
     unfollow: (id: number) => instance.delete(`follow/${id}`)
 }

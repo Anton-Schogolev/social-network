@@ -19,4 +19,3 @@ export function withAuthRedirect<T>(Component: React.ComponentType<T>) {
     }
     return connect<MapStateToPropsType,{},T,StateType>(MapStateToProps,{})(Container)
 }
-

@@ -58,7 +58,6 @@ const connector = connect(MapStateToProps, {setUserProfile, setUserProfileStatus
 type PropsType = ConnectedProps<typeof connector>
 
 export default connector(withRouter(ProfileContainer))
-
 /*
 //@ts-ignore
 const connect = (mstp, mdtp) => {
