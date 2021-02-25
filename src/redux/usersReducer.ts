@@ -124,39 +124,36 @@ export const toggleButtonDisabled = (id: number) => {
 
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
 type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
-export const getUsers = (page: number, pageSize: number): ThunkType => (dispatch: ThunkDispatchType) => {
+export const getUsers = (page: number, pageSize: number): ThunkType => async (dispatch: ThunkDispatchType) => {
     dispatch(changePage(page))
     dispatch(setIsFetching(true))
-    UsersAPI.getUsers(pageSize, page).then(data => {
-        dispatch(setIsFetching(false))
-        dispatch(setTotalNumber(data.totalCount))
-        dispatch(setNumberOfPages(Math.ceil(data.totalCount / pageSize)))
-        dispatch(setUsers(data.items.map(it => ({
-            id: it.id,
-            name: it.name,
-            status: it.status,
-            photos: {
-                small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
-                large: it.photos.large
-            },
-            followed: it.followed,
-            address: {country: "Belarus"}
-        }))))
-    })
+    const data = await UsersAPI.getUsers(pageSize, page)
+    dispatch(setIsFetching(false))
+    dispatch(setTotalNumber(data.totalCount))
+    dispatch(setNumberOfPages(Math.ceil(data.totalCount / pageSize)))
+    dispatch(setUsers(data.items.map(it => ({
+        id: it.id,
+        name: it.name,
+        status: it.status,
+        photos: {
+            small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+            large: it.photos.large
+        },
+        followed: it.followed,
+        address: {country: "Belarus"}
+    }))))
 }
-export const follow = (userId: number): ThunkType => (dispatch: ThunkDispatchType) => {
+export const follow = (userId: number): ThunkType => async (dispatch: ThunkDispatchType) => {
     dispatch(toggleButtonDisabled(userId))
-    UsersAPI.follow(userId).then(response => {
-        dispatch(toggleButtonDisabled(userId))
-        if (response.status === 200)
-            dispatch(followAC(userId))
-    })
+    const response = await UsersAPI.follow(userId)
+    dispatch(toggleButtonDisabled(userId))
+    if (response.status === 200)
+        dispatch(followAC(userId))
 }
-export const unfollow = (userId: number): ThunkType => (dispatch: ThunkDispatchType) => {
+export const unfollow = (userId: number): ThunkType => async (dispatch: ThunkDispatchType) => {
     dispatch(toggleButtonDisabled(userId))
-    UsersAPI.unfollow(userId).then(response => {
-        dispatch(toggleButtonDisabled(userId))
-        if (response.status === 200)
-            dispatch(unfollowAC(userId))
-    })
+    const response = await UsersAPI.unfollow(userId)
+    dispatch(toggleButtonDisabled(userId))
+    if (response.status === 200)
+        dispatch(unfollowAC(userId))
 }

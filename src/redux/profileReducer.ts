@@ -115,30 +115,24 @@ export const setUserProfileStatusAC = (status: string) => {
 
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
 // type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
-export const setUserProfile = (userId: string): ThunkType => (dispatch) => {
-    ProfileAPI.getProfile(userId)
-        .then(data => {
-            dispatch(setUserProfileAC({
-                    ...data,
-                    photos: {
-                        small: data.photos.small,
-                        large: data.photos.large
-                    }
-                })
-            )
+export const setUserProfile = (userId: string): ThunkType => async (dispatch) => {
+    const data = await ProfileAPI.getProfile(userId)
+    dispatch(setUserProfileAC({
+            ...data,
+            photos: {
+                small: data.photos.small,
+                large: data.photos.large
+            }
         })
+    )
 }
-export const setUserProfileStatus = (userId: string): ThunkType => (dispatch) => {
-    ProfileAPI.getStatus(userId)
-        .then(response => {
-            dispatch(setUserProfileStatusAC(response.data)
-            )
-        })
+export const setUserProfileStatus = (userId: string): ThunkType => async (dispatch) => {
+    const response = await ProfileAPI.getStatus(userId)
+    dispatch(setUserProfileStatusAC(response.data)
+    )
 }
-export const putUserProfileStatus = (status: string): ThunkType => (dispatch) => {
-    ProfileAPI.putStatus(status)
-        .then(response => {
-            if(response.data.resultCode === 0)
-            dispatch(setUserProfileStatusAC(status))
-        })
+export const putUserProfileStatus = (status: string): ThunkType => async (dispatch) => {
+    const response = await ProfileAPI.putStatus(status)
+    if (response.data.resultCode === 0)
+        dispatch(setUserProfileStatusAC(status))
 }

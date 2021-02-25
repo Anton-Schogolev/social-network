@@ -26,7 +26,7 @@ export const setInitializedSuccess = () => {
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes | FormAction>;
 // type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes | FormAction>;
 
-export const initialize = (): ThunkType => (dispatch) => {
-    dispatch(setAuth())
-        .then(()=>dispatch(setInitializedSuccess()))
+export const initialize = (): ThunkType => async (dispatch) => {
+    await dispatch(setAuth())
+    dispatch(setInitializedSuccess())
 }

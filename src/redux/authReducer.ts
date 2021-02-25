@@ -27,25 +27,22 @@ export const setAuthAC = (id: number, email: string, login: string, isAuth: bool
 }
 
 type ThunkType<T = void> = ThunkAction<T, StateType, unknown, ActionsTypes | FormAction>;
-export const setAuth = (): ThunkType<Promise<void>> => (dispatch) => {
-    return AuthAPI.getAuth().then(data => {
-        if (data.resultCode === 0)
-            dispatch(setAuthAC(data.data.id, data.data.email, data.data.login, true))
-        else
-            dispatch(setAuthAC(-1, "", "", false))
-    })
+export const setAuth = (): ThunkType<Promise<void>> => async (dispatch) => {
+    const data = await AuthAPI.getAuth()
+    if (data.resultCode === 0)
+        dispatch(setAuthAC(data.data.id, data.data.email, data.data.login, true))
+    else
+        dispatch(setAuthAC(-1, "", "", false))
 }
-export const login = (loginData: AuthLoginType): ThunkType => (dispatch) => {
-    AuthAPI.login(loginData).then(response => {
-        if(response.data.resultCode === 0)
-            dispatch(setAuth())
-        else
-            dispatch(stopSubmit("login", {_error: response.data.messages[0]}))
-    })
+export const login = (loginData: AuthLoginType): ThunkType => async (dispatch) => {
+    const response = await AuthAPI.login(loginData)
+    if (response.data.resultCode === 0)
+        dispatch(setAuth())
+    else
+        dispatch(stopSubmit("login", {_error: response.data.messages[0]}))
 }
-export const logout = (): ThunkType => (dispatch) => {
-    AuthAPI.logout().then(response => {
-        if(response.data.resultCode === 0)
-            dispatch(setAuth())
-    })
+export const logout = (): ThunkType => async (dispatch) => {
+    const response = await AuthAPI.logout()
+    if (response.data.resultCode === 0)
+        dispatch(setAuth())
 }
