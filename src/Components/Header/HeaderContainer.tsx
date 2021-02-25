@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {StateType} from "../../redux/reduxStore";
 import {logout} from "../../redux/authReducer";
 import {AuthPropsType} from "../../types/entities";
+import {authSelector} from "../../redux/authSelectors";
 
 type MapStateToPropsType = AuthPropsType
 type MapDispatchToPropsType = {
@@ -25,7 +26,7 @@ class HeaderContainer extends React.Component<MapStateToPropsType & MapDispatchT
     }
 }
 
-const MapStateToProps = (state: StateType): MapStateToPropsType => ({...state.auth})
+const MapStateToProps = (state: StateType): MapStateToPropsType => ({...authSelector(state)})
 
 
 export default connect(MapStateToProps,{logout})(HeaderContainer)

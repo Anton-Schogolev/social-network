@@ -8,6 +8,7 @@ import {Redirect} from "react-router-dom";
 import {required} from "../../utils/validators";
 import {FormsInput} from "../common/FormsControls";
 import s from "./Login.module.css";
+import {authedIdSelector, isAuthSelector} from "../../redux/authSelectors";
 
 
 function LoginForm(props: InjectedFormProps<AuthLoginType>) {
@@ -28,8 +29,8 @@ const LoginReduxForm = reduxForm<AuthLoginType>({form: "login"})(LoginForm)
 
 export const Login = () => {
     const dispatch = useDispatch()
-    const isAuth = useSelector<StateType, boolean>(state => state.auth.isAuth)
-    const userId = useSelector<StateType, number>(state => state.auth.id)
+    const isAuth = useSelector(isAuthSelector)
+    const userId = useSelector(authedIdSelector)
     const onSubmit = (formData: AuthLoginType) => {
         dispatch(login(formData))
     }

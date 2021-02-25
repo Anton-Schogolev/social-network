@@ -14,11 +14,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {StateType} from "./redux/reduxStore";
 import {initialize} from "./redux/appReducer";
 import {Preloader} from "./Components/common/Preloader";
+import {isAuthSelector} from "./redux/authSelectors";
+import {initializeSelector} from "./redux/appSelectors";
 
 
 function App() {
-    const isAuth = useSelector<StateType,boolean>(state => state.auth.isAuth)
-    const initialized = useSelector<StateType,boolean>(state => state.app.initialized)
+    const isAuth = useSelector(isAuthSelector)
+    const initialized = useSelector(initializeSelector)
     const dispatch = useDispatch()
     useEffect(()=>{dispatch(initialize())},[dispatch,isAuth])
     if(!initialized){
@@ -32,11 +34,11 @@ function App() {
                 <div className={"container"}>
                     <Route path={"/login"} render={() => <Login/>}/>
                     <Route path={"/profile/:userid?"} render={() => <ProfileContainer/>}/>
+                    <Route path={"/users"} render={() => <UsersContainer/>}/>
                     <Route path={"/Dialogs"} render={() => <Dialogs/>}/>
                     <Route path={"/news"} render={() => <News/>}/>
                     <Route path={"/music"} render={() => <Music/>}/>
                     <Route path={"/settings"} render={() => <Settings/>}/>
-                    <Route path={"/users"} render={() => <UsersContainer/>}/>
                 </div>
             </div>
         </HashRouter>
