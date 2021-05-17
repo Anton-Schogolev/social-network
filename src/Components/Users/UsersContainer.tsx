@@ -56,7 +56,7 @@ const mapStateToProps = (state: StateType): MapStateToPropsType => ({
     isAuth: state.auth.isAuth
 })
 
-export default compose<any>(
+export default compose<React.ComponentType>(
     connect<MapStateToPropsType, MapDispatchToPropsType, {}, StateType>(mapStateToProps, {
     follow, unfollow, setUsers, changePage, setTotalNumber, setIsFetching, getUsers}),
     withAuthRedirect)(UsersContainer)

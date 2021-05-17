@@ -3,6 +3,7 @@ import {ThunkAction} from "redux-thunk";
 import {StateType} from "./reduxStore"
 import {FormAction} from "redux-form";
 import {setAuth} from "./authReducer";
+import {Action} from "redux";
 
 const initialState: AppStateType = {
     initialized: false
@@ -23,10 +24,15 @@ export const setInitializedSuccess = () => {
         type: "INITIALIZED"
     } as const
 }
-type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes | FormAction>;
+type ThunkType<T extends Action = ActionsTypes | FormAction> = ThunkAction<void, StateType, unknown, T>;
 // type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes | FormAction>;
 
 export const initialize = (): ThunkType => async (dispatch) => {
     await dispatch(setAuth())
     dispatch(setInitializedSuccess())
 }
+
+// const useSelector = (selector) => {
+//     const store = useReduxContext()
+//     return selector(store.getState())
+// }
