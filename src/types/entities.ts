@@ -68,7 +68,7 @@ export type UserType = {
     followed: boolean
     address: AddressType
 }
-export type UsersPropsType = {
+export type UsersStateType = {
     users: UserType[]
     currentPage: number
     pageSize: number

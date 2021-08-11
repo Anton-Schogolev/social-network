@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import './App.css';
 import Nav from "./Components/Nav/Nav";
 import Dialogs from "./Components/Dialogs/Dialogs";
-import {HashRouter, Route} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import {News} from "./Components/News/News";
 import {Music} from "./Components/Music/Music";
 import {Settings} from "./Components/Settings/Settings";
@@ -21,12 +21,14 @@ function App() {
     const isAuth = useSelector(isAuthSelector)
     const initialized = useSelector(initializeSelector)
     const dispatch = useDispatch()
-    useEffect(()=>{dispatch(initialize())},[dispatch,isAuth])
-    if(!initialized){
+    useEffect(() => {
+        dispatch(initialize())
+    }, [dispatch, isAuth])
+    if (!initialized) {
         return <Preloader/>
     }
     return (
-        <HashRouter>
+        <BrowserRouter basename={"social-network"}>
             <div className="App">
                 <HeaderContainer/>
                 <Nav/>
@@ -40,8 +42,8 @@ function App() {
                     <Route path={"/settings"} render={() => <Settings/>}/>
                 </div>
             </div>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
 
-export default (App);
+export default App;

@@ -1,6 +1,6 @@
 import React from "react";
 import {StateType} from "../../redux/reduxStore";
-import {UsersPropsType, UserType} from "../../types/entities";
+import {UsersStateType, UserType} from "../../types/entities";
 import {connect} from "react-redux";
 import {
     changePage, follow, getUsers,
@@ -13,7 +13,7 @@ import {Preloader} from "../common/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
-type MapStateToPropsType = UsersPropsType & { isAuth: boolean }
+type MapStateToPropsType = UsersStateType & { isAuth: boolean }
 type MapDispatchToPropsType = {
     follow: (userId: number) => void
     unfollow: (userId: number) => void

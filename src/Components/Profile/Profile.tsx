@@ -7,14 +7,11 @@ type PropsType = {
     userProfile: ProfileUserType,
     userStatus: string,
     isHisProfile: boolean
-    putUserProfileStatus: (status:string) => void
+    putUserProfileStatus: (status: string) => void
 }
 
-export const Profile = (props: PropsType) => (
-    <div>
-        <div>
-            <img width={"100%"} src={"http://www.cashadvance6online.com/data/archive/img/751556980.png"} alt={""}/>
-        </div>
+export const Profile = (props: PropsType) => {
+    return <div>
         <UserProfile
             userProfile={props.userProfile}
             status={props.userStatus}
@@ -23,4 +20,4 @@ export const Profile = (props: PropsType) => (
         />
         <MyPosts/>
     </div>
-);
+}

@@ -1,9 +1,10 @@
-import {ActionsTypes, UsersPropsType, UserType} from "../types/entities";
+import {ActionsTypes, UsersStateType, UserType} from "../types/entities";
 import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {StateType} from "./reduxStore";
 import {UsersAPI} from "../api/api";
+import {batch} from "react-redux";
 
-const initialState: UsersPropsType = {
+const initialState: UsersStateType = {
     users: [
         {
             id: 1,
@@ -36,8 +37,9 @@ export type UsersActionsType = ReturnType<typeof followAC>
     | ReturnType<typeof setNumberOfPages>
     | ReturnType<typeof setIsFetching>
     | ReturnType<typeof toggleButtonDisabled>
+    | ReturnType<typeof updateUsersState>
 
-export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType): UsersPropsType => {
+export const usersReducer = (state: UsersStateType = initialState, action: UsersActionsType): UsersStateType => {
     switch (action.type) {
         case "FOLLOW": {
             return {...state, users: state.users.map(us => us.id === action.userId ? {...us, followed: true} : us)}
@@ -45,20 +47,14 @@ export const usersReducer = (state: UsersPropsType = initialState, action: Users
         case "UNFOLLOW": {
             return {...state, users: state.users.map(us => us.id === action.userId ? {...us, followed: false} : us)}
         }
-        case "SET_USERS": {
-            return {...state, users: [...action.users]}
-        }
-        case "CHANGE_PAGE": {
-            return {...state, currentPage: action.page}
-        }
-        case "SET_TOTAL_NUMBER": {
-            return {...state, totalNumber: action.totalNumber}
-        }
-        case "SET_NUMBER_OF_PAGES": {
-            return {...state, numberOfPages: action.numberOfPages}
-        }
+        case "users/UPDATE_STATE":
+            return {...state, ...action.state}
+        case "SET_USERS":
+        case "CHANGE_PAGE":
+        case "SET_TOTAL_NUMBER":
+        case "SET_NUMBER_OF_PAGES":
         case "SET_IS_FETCHING": {
-            return {...state, isFetching: action.isFetching}
+            return {...state, ...action.payload}
         }
         case "TOGGLE_BUTTON_DISABLED": {
             if (state.buttonsDisabled.some(id => id === action.id))
@@ -72,6 +68,17 @@ export const usersReducer = (state: UsersPropsType = initialState, action: Users
             return state
     }
 }
+// type MakeObjectKeysOptional<T extends Object> = {
+//     [key in keyof T]?: T[key]
+// }
+type UsersStateOptionalType = {
+    [key in keyof UsersStateType]?: UsersStateType[key]
+}
+
+export const updateUsersState = (state: UsersStateOptionalType) => ({
+    type: "users/UPDATE_STATE",
+    state
+} as const)
 
 export const followAC = (id: number) => {
     return {
@@ -88,31 +95,31 @@ export const unfollowAC = (id: number) => {
 export const setUsers = (users: UserType[]) => {
     return {
         type: "SET_USERS",
-        users: users
+        payload: {users}
     } as const
 }
 export const changePage = (page: number) => {
     return {
         type: "CHANGE_PAGE",
-        page: page
+        payload: {currentPage: page}
     } as const
 }
 export const setTotalNumber = (totalNumber: number) => {
     return {
         type: "SET_TOTAL_NUMBER",
-        totalNumber: totalNumber
+        payload: {totalNumber}
     } as const
 }
 export const setNumberOfPages = (numberOfPages: number) => {
     return {
         type: "SET_NUMBER_OF_PAGES",
-        numberOfPages
+        payload: {numberOfPages}
     } as const
 }
 export const setIsFetching = (isFetching: boolean) => {
     return {
         type: "SET_IS_FETCHING",
-        isFetching: isFetching
+        payload: {isFetching}
     } as const
 }
 export const toggleButtonDisabled = (id: number) => {
@@ -125,23 +132,49 @@ export const toggleButtonDisabled = (id: number) => {
 type ThunkType = ThunkAction<void, StateType, unknown, ActionsTypes>;
 type ThunkDispatchType = ThunkDispatch<StateType, unknown, ActionsTypes>;
 export const getUsers = (page: number, pageSize: number): ThunkType => async (dispatch: ThunkDispatchType) => {
-    dispatch(changePage(page))
-    dispatch(setIsFetching(true))
+    // 1
+    batch(()=> {
+        dispatch(changePage(page))
+        dispatch(setIsFetching(true))
+    })
+    // 2
+    // dispatch(updateUsersState({currentPage: page, isFetching: true}))
+
     const data = await UsersAPI.getUsers(pageSize, page)
-    dispatch(setIsFetching(false))
-    dispatch(setTotalNumber(data.totalCount))
-    dispatch(setNumberOfPages(Math.ceil(data.totalCount / pageSize)))
-    dispatch(setUsers(data.items.map(it => ({
-        id: it.id,
-        name: it.name,
-        status: it.status,
-        photos: {
-            small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
-            large: it.photos.large
-        },
-        followed: it.followed,
-        address: {country: "Belarus"}
-    }))))
+    // 1
+    batch(()=> {
+        dispatch(setIsFetching(false))
+        dispatch(setTotalNumber(data.totalCount))
+        dispatch(setNumberOfPages(Math.ceil(data.totalCount / pageSize)))
+        dispatch(setUsers(data.items.map(it => ({
+            id: it.id,
+            name: it.name,
+            status: it.status,
+            photos: {
+                small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+                large: it.photos.large
+            },
+            followed: it.followed,
+            address: {country: "Belarus"}
+        }))))
+    })
+    // 2
+    // dispatch(updateUsersState({
+    //     isFetching: false,
+    //     totalNumber: data.totalCount,
+    //     numberOfPages: Math.ceil(data.totalCount / pageSize),
+    //     users: data.items.map(it => ({
+    //         id: it.id,
+    //         name: it.name,
+    //         status: it.status,
+    //         photos: {
+    //             small: it.photos.small ? it.photos.small : "https://upload.wikimedia.org/wikipedia/commons/2/21/Solid_black.svg",
+    //             large: it.photos.large
+    //         },
+    //         followed: it.followed,
+    //         address: {country: "Belarus"}
+    //     }))
+    // }))
 }
 export const follow = (userId: number): ThunkType => async (dispatch: ThunkDispatchType) => {
     dispatch(toggleButtonDisabled(userId))
